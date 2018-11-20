@@ -1,4 +1,12 @@
 <meta charset="UTF-8">
 <script>
+    let tempC = +prompt('Введите температуру в градусах по Цельсию');
+    let tempF = 0;
 
+    if(isNaN(tempC)) {
+        alert('Вы ввели некорректные данные, расчет невозможен');
+    } else {
+        tempF = (9 / 5) * tempC + 32;
+        alert(tempF);
+    }
 </script>
