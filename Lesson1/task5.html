@@ -11,8 +11,8 @@
 
     function sumNumber(count, end, number) {
         let sum = 0;
-        for(count; count<=end; count++){
-            sum += +number[count-1];
+        for (count; count <= end; count++) {
+            sum += +number[count - 1];
         }
         return sum;
     }
@@ -21,19 +21,19 @@
         ticketNumber = prompt(message + `Введите номер билета из ${ticketNumberLength} цифр`, '');
 
         //Проверка на отмену ввода, ввод только цифр в количестве ticketNumberLength
-        if(ticketNumber === null || !(ticketNumber.replace(/\d/g, '').length === 0) || (ticketNumber.length !== ticketNumberLength)){
+        if (ticketNumber === null || (ticketNumber.replace(/\d/g, '').length) || (ticketNumber.length !== ticketNumberLength)) {
             message = `Необходимо ввести только ${ticketNumberLength} цифр!\n`;
             continue;
         }
 
         //Ошибок нет
         err = false;
-        if(sumNumber(1, ticketNumberLength / 2, ticketNumber) ===
+        if (sumNumber(1, ticketNumberLength / 2, ticketNumber) ===
             sumNumber(ticketNumberLength / 2 + 1, ticketNumberLength, ticketNumber)) {
             console.log('Поздравляю! Ваш билет счастливый!');
         } else {
             console.log('не повезло :(');
         }
-    }while(err)
+    } while (err)
 
 </script>
