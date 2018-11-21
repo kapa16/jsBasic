@@ -1,0 +1,14 @@
+<meta charset="UTF-8">
+<script>
+    "use strict";
+
+    let tempC = +prompt('Введите температуру в градусах по Цельсию');
+    let tempF = 0;
+
+    if (isNaN(tempC)) {
+        alert('Вы ввели некорректные данные, расчет невозможен');
+    } else {
+        tempF = (9 / 5) * tempC + 32;
+        alert("Температура по Фаренгейту: " + tempF + " \u00B0F");
+    }
+</script>
