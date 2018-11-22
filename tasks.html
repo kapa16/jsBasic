@@ -2,21 +2,44 @@
 <script>
     "use strict";
 
+
+
+
+
+
+/*    //--------------------------Удаление класса у элемента--------------------
     let obj = {
-        className: 'open menu'
+        className: 'my menu menu'
+    };
+
+    function removeClass(obj, className) {
+        let classNameArr = obj.className.split(" ");
+        for (let i = 0; i < classNameArr.length; i++) {
+            if (classNameArr[i] == className) {
+                classNameArr.splice(i, 1);
+                i--;
+            }
+        }
+        obj.className = classNameArr.join(" ");
     }
 
-    function addClass(obj, classNew) {
-        classNew = classNew.trim();
-        let className = obj.className;
-        if (className.indexOf(classNew) >= 0) return;
-        obj.className = obj.className + ' ' + classNew;
+    removeClass(obj, 'menu');
+    console.log(obj.className);*/
+
+
+/*--------------------------Преобразование стилей CSS в camelCase--------------------
+    function camelize(className) {
+        let classNameArr = className.split('-');
+        for (let i = 1; i < classNameArr.length; i++){
+            classNameArr[i] = classNameArr[i][0].toUpperCase() + classNameArr[i].slice(1);
+        }
+        return classNameArr.join("");
     }
 
-    addClass(obj, 'new'); // obj.className='open menu new'
-    addClass(obj, 'open'); // без изменений (класс уже существует)
-    addClass(obj, 'me'); // obj.className='open menu new me'
+    console.log(camelize("background-color"));
+    console.log(camelize("list-style-image"));
+    console.log(camelize("-webkit-transition"));
+*/
 
-    console.log( obj.className );
 
 </script>
