@@ -1,18 +1,22 @@
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <script>
-  "use strict";
+    "use strict";
 
-  let salaries = {
-    "Вася": 100,
-    "Петя": 300,
-    "Даша": 250
-  };
-  let name = 'no',
-    salarySum = -Infinity;
+    let obj = {
+        className: 'open menu'
+    }
 
-  for (let key in salaries) {
-    salaries[key] *= 2;
-  }
+    function addClass(obj, classNew) {
+        classNew = classNew.trim();
+        let className = obj.className;
+        if (className.indexOf(classNew) >= 0) return;
+        obj.className = obj.className + ' ' + classNew;
+    }
 
+    addClass(obj, 'new'); // obj.className='open menu new'
+    addClass(obj, 'open'); // без изменений (класс уже существует)
+    addClass(obj, 'me'); // obj.className='open menu new me'
+
+    console.log( obj.className );
 
 </script>
