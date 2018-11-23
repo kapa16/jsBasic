@@ -2,8 +2,79 @@
 <script>
     "use strict";
 
+    //----------------------------Вывести односвязный список ----------------------
+    let list = { value: 1 };
+    list.next = { value: 2 };
+    list.next.next = { value: 3 };
+    list.next.next.next = { value: 4 };
+
+    function printList(list) {
+        if (list.next === undefined) {
+            return list.value;
+        }
+        return list.value + ' ' + printList(list.next);
+    }
+
+    function printReverseList(list) {
+        if (list.next === undefined) {
+            return list.value;
+        }
+        return printReverseList(list.next) + ' ' + list.value;
+    }
+
+    console.log(printList(list));
+    console.log(printReverseList(list));
+
+
 /*
-    //---------------------------Сортировка в обратном порядке
+    //--------------------------Сортировка объектов ------------------------------------
+    let vasya = { name: "Вася", age: 23 };
+    let masha = { name: "Маша", age: 18 };
+    let vovochka = { name: "Вовочка", age: 6 };
+
+    let people = [ vasya , masha , vovochka ];
+
+    people.sort(function (a, b) {
+        return a.age - b.age;
+    })
+
+    // теперь people: [vovochka, masha, vasya]
+    console.log(people[0].age) // 6
+    console.log(people);
+*/
+
+
+/*
+    //---------------------------Случайный порядок в массиве ------------------------------------
+
+    let arr = [1, 2, 3, 4, 5];
+
+    function randomSort () {
+        return Math.random() - 0.5;
+    }
+
+    arr.sort(randomSort);
+
+    alert(arr); // элементы в случайном порядке, например [3,5,1,2,4]
+    */
+
+
+/*  //---------------------------Скопировать и отсортировать массив ------------------------------------
+
+    let arr = ["HTML", "JavaScript", "CSS"],
+        arrSorted = arr.slice().sort();
+
+    // for (let i = 0; i < arr.length; i++) {
+    //     arrSorted[i] = arr[i];
+    // }
+    // arrSorted.sort();
+
+    alert( arrSorted ); // CSS, HTML, JavaScript
+    alert( arr ); // HTML, JavaScript, CSS (без изменений)
+    */
+
+/*
+    //---------------------------Сортировка в обратном порядке ------------------------------------
     let arr = [5, 2, 1, -10, 8];
 
     function compareReverse(a, b) {
@@ -17,7 +88,7 @@
 
 
 /*
-    //------------------------оставить в массиве диапазон от a до b
+    //------------------------оставить в массиве диапазон от a до b ------------------------------------
     let arr = [5, 3, 8, 1];
 
     function filterRangeInPlace(arr, a, b) {
