@@ -1,5 +1,52 @@
-<meta charset="UTF-8">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>Document</title>
+</head>
+<body>
+
+<div class="calc">
+    <p class="paragraph" id="a"></p>
+    <p class="paragraph" id="b"></p>
+    <p class="paragraph" id="result"></p>
+</div>
+
+
 <script>
     "use strict";
 
+    /**
+     * Вычисление случайного значения от -100 до 100
+     * @returns {number} Возвращает случайное число
+     */
+    const getRandomNumber = () => Math.floor(Math.random() * 200 - 100);
+
+    const a = getRandomNumber(),
+        b = getRandomNumber();
+    let result = 0,
+        sign = '';
+
+    if (a >= 0 && b >= 0) {
+        result = a - b;
+        sign = '-';
+    } else if (a < 0 && b < 0) {
+        result = a * b;
+        sign = '*';
+    } else {
+        result = a + b;
+        sign = '+';
+    }
+
+    document.getElementById('a').innerHTML = `a = ${a}`;
+    document.getElementById('b').innerHTML = `b = ${b}`;
+    document.getElementById('result').innerHTML = `${a} <span class="red">${sign}</span> ${b} = ${result}`;
 </script>
+</body>
+</html>

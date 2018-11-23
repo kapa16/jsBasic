@@ -2,4 +2,56 @@
 <script>
     "use strict";
 
+    /**
+     * Функция возвращает сумму, переданных в нее параметров
+     * @param {number} a Первое слагаемое
+     * @param {number} b Второе слагаемое
+     * @returns {number} Возвращаем числовое значение суммы
+     */
+    function plus(a, b) {
+        return a + b;
+    }
+
+    /**
+     * Функция возвращает разность между параметром a и b
+     * @param {number} a Первый аргумент, из которого вычитаем
+     * @param {number} b Второй аргумент, который вычитаем из первого
+     * @returns {number} Возвращаем числовое значение разности
+     */
+    const minus = function (a, b) {
+        return a - b;
+    };
+
+    /**
+     * Функция возвращает результат деления параметра a на параметр b
+     * @param {number} a Делимое
+     * @param {number} b Делитель
+     * @returns {number} Возвращаем числовое значение деления
+     */
+    const divide = (a, b) => a / b;
+
+    /**
+     * Функция возвращает результат умножения параметров a и b
+     * @param {number} a Первый множитель
+     * @param {number} b Второй множитель
+     * @returns {number} Возвращаем числовое значение умножения
+     */
+    function multiplication(a, b) {
+        return a * b;
+    }
+
+    /**
+     * Вычисление случайного значения от -100 до 100
+     * @returns {number} Возвращает случайное число
+     */
+    const getRandomNumber = () => Math.floor(Math.random() * 200 - 100);
+
+    const a = getRandomNumber(),
+        b = getRandomNumber();
+
+    console.log(plus(a, b));
+    console.log(minus(a, b));
+    console.log(divide(a, b));
+    console.log(multiplication(a, b));
+
 </script>

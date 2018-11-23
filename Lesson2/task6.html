@@ -2,4 +2,39 @@
 <script>
     "use strict";
 
+    /**
+     * Функция возвращает наименование российской валюты, в зависимости от суммы
+     * @param {number} number - сумма в рублях (целое число)
+     * @returns {string} возвращяет наименование валюты
+     */
+    function getCurrencyName(number) {
+
+        let divRest = number % 100;
+        if (divRest > 10 && divRest < 20) {
+            return "рублей";
+        }
+
+        switch (number % 10) {
+            case 1:
+                return 'рубль';
+            case 2:
+            case 3:
+            case 4:
+                return 'рубля';
+            default:
+                return 'рублей';
+        }
+
+    }
+
+    const sum = parseInt(prompt('Введите сумму в рублях (целое число)'));
+
+    if (Number.isNaN(sum)) {
+        alert('Некорректный ввод, расчет невозможен');
+    } else {
+        alert(`Ваша сумма в ${sum} ${getCurrencyName(sum)} успешно зачислена`);
+    }
+
+
 </script>
+

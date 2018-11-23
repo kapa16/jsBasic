@@ -1,0 +1,38 @@
+
+html {
+    font-family: sans-serif;
+}
+
+.calc {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.paragraph {
+    display: flex;
+    align-items: center;
+    font-size: 40px;
+
+}
+
+.red {
+    displitems: center;
+    color: red;
+    font-weight: 800;
+}
+
+.number {
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: cornflowerblue;
+    border-radius: 5px;
+    color: white;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
