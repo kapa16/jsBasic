@@ -2,141 +2,226 @@
 <script>
     "use strict";
 
-    //----------------------------Вывести односвязный список ----------------------
-    let list = { value: 1 };
-    list.next = { value: 2 };
-    list.next.next = { value: 3 };
-    list.next.next.next = { value: 4 };
-
-    function printList(list) {
-        if (list.next === undefined) {
-            return list.value;
-        }
-        return list.value + ' ' + printList(list.next);
-    }
-
-    function printReverseList(list) {
-        if (list.next === undefined) {
-            return list.value;
-        }
-        return printReverseList(list.next) + ' ' + list.value;
-    }
-
-    console.log(printList(list));
-    console.log(printReverseList(list));
-
-
-/*
-    //--------------------------Сортировка объектов ------------------------------------
-    let vasya = { name: "Вася", age: 23 };
-    let masha = { name: "Маша", age: 18 };
-    let vovochka = { name: "Вовочка", age: 6 };
-
-    let people = [ vasya , masha , vovochka ];
-
-    people.sort(function (a, b) {
-        return a.age - b.age;
-    })
-
-    // теперь people: [vovochka, masha, vasya]
-    console.log(people[0].age) // 6
-    console.log(people);
-*/
-
-
-/*
-    //---------------------------Случайный порядок в массиве ------------------------------------
-
-    let arr = [1, 2, 3, 4, 5];
-
-    function randomSort () {
-        return Math.random() - 0.5;
-    }
-
-    arr.sort(randomSort);
-
-    alert(arr); // элементы в случайном порядке, например [3,5,1,2,4]
-    */
-
-
-/*  //---------------------------Скопировать и отсортировать массив ------------------------------------
-
-    let arr = ["HTML", "JavaScript", "CSS"],
-        arrSorted = arr.slice().sort();
-
-    // for (let i = 0; i < arr.length; i++) {
-    //     arrSorted[i] = arr[i];
-    // }
-    // arrSorted.sort();
-
-    alert( arrSorted ); // CSS, HTML, JavaScript
-    alert( arr ); // HTML, JavaScript, CSS (без изменений)
-    */
-
-/*
-    //---------------------------Сортировка в обратном порядке ------------------------------------
-    let arr = [5, 2, 1, -10, 8];
-
-    function compareReverse(a, b) {
-        return b - a;
-    }
-
-    arr.sort(compareReverse);
-
-    console.log(arr);
-*/
-
-
-/*
-    //------------------------оставить в массиве диапазон от a до b ------------------------------------
-    let arr = [5, 3, 8, 1];
-
-    function filterRangeInPlace(arr, a, b) {
+    //--------------------------Оставить уникальные элементы массива
+    function unique(arr) {
+        let obj = [];
         for (let i = 0; i < arr.length; i++) {
-            if (arr[i] < a || arr[i] > b) {
-                arr.splice(i--, 1);
+            obj[arr[i]] = arr[i];
+        }
+        return Object.keys(obj);
+        // Для IE8
+        // let result = [];
+        // for (let key in obj) {
+        //     result.push(obj[key]);
+        // }
+        // return result;
+    }
+
+    let strings = ["кришна", "кришна", "харе", "харе",
+        "харе", "харе", "кришна", "кришна", "8-()"];
+
+    alert(unique(strings)); // кришна, харе, 8-()
+
+
+    /*
+        //-------------------------Отфильтровать аннограммы--------------------------
+
+        let arr = ["воз", "киборг", "корсет", "ЗОВ", "гробик", "костер", "сектор"];
+
+        function aclean(arr) {
+            // не очень
+            // let word = '';
+            // for (let i = 0; i < arr.length; i++) {
+            //     word = arr[i].toLowerCase().split('').sort().join('');
+            //     for (let j = i + 1 ; j < arr.length; j++) {
+            //         console.log(word);
+            //         console.log(arr[j].toLowerCase().split('').sort().join(''));
+            //         if (word === arr[j].toLowerCase().split('').sort().join('')) {
+            //             arr.splice(j--, 1);
+            //
+            //         }
+            //     }
+            // }
+            // return arr;
+
+            let obj = {},
+                option;
+
+            for (let i = 0; i < arr.length; i++) {
+                option = arr[i].toLowerCase().split('').sort().join('');
+                obj[option] = arr[i];
+            }
+            let result = [];
+            for (let key in obj) {
+                result.push(obj[key]);
+            }
+            return result;
+        }
+
+        alert(aclean(arr)); // "воз,киборг,корсет" или "ЗОВ,гробик,сектор"
+    */
+
+    /*
+        //----------------------------Вывести односвязный список ----------------------
+        let list = { value: 1 };
+        list.next = { value: 2 };
+        list.next.next = { value: 3 };
+        list.next.next.next = { value: 4 };
+
+        /!**
+         * Функция перебирет односвязный список объектов,
+         * связанных через свойство next в прямом порядке с помощью рекурсии
+         * @param {object} list - первый объект
+         * @returns {string} возвращяет список значинй свойства value
+         *!/
+        function printList(list) {
+            if (list.next === undefined) {
+                return list.value;
+            }
+            return list.value + ' ' + printList(list.next);
+        }
+
+        function printListCycle(list) {
+            let values = '';
+            while (list) {
+                values = values + list.value + ' ';
+                list = list.next;
+            }
+            return values;
+        }
+
+
+        /!**
+         * Функция перебирет односвязный список объектов,
+         * связанных через свойство next в обратном порядке с помощью рекурсии
+         * @param {object} list - первый объект
+         * @returns {string} возвращяет список значинй свойства value
+         *!/
+        function printReverseList(list) {
+            if (list.next === undefined) {
+                return list.value;
+            }
+            return printReverseList(list.next) + ' ' + list.value;
+        }
+
+        console.log(printList(list));
+        console.log(printListCycle(list));
+        console.log((list));
+        console.log(printReverseList(list));
+    */
+
+
+    /*
+        //--------------------------Сортировка объектов ------------------------------------
+        let vasya = { name: "Вася", age: 23 };
+        let masha = { name: "Маша", age: 18 };
+        let vovochka = { name: "Вовочка", age: 6 };
+
+        let people = [ vasya , masha , vovochka ];
+
+        people.sort(function (a, b) {
+            return a.age - b.age;
+        })
+
+        // теперь people: [vovochka, masha, vasya]
+        console.log(people[0].age) // 6
+        console.log(people);
+    */
+
+
+    /*
+        //---------------------------Случайный порядок в массиве ------------------------------------
+
+        let arr = [1, 2, 3, 4, 5];
+
+        function randomSort () {
+            return Math.random() - 0.5;
+        }
+
+        arr.sort(randomSort);
+
+        alert(arr); // элементы в случайном порядке, например [3,5,1,2,4]
+        */
+
+
+    /*  //---------------------------Скопировать и отсортировать массив ------------------------------------
+
+        let arr = ["HTML", "JavaScript", "CSS"],
+            arrSorted = arr.slice().sort();
+
+        // for (let i = 0; i < arr.length; i++) {
+        //     arrSorted[i] = arr[i];
+        // }
+        // arrSorted.sort();
+
+        alert( arrSorted ); // CSS, HTML, JavaScript
+        alert( arr ); // HTML, JavaScript, CSS (без изменений)
+        */
+
+    /*
+        //---------------------------Сортировка в обратном порядке ------------------------------------
+        let arr = [5, 2, 1, -10, 8];
+
+        function compareReverse(a, b) {
+            return b - a;
+        }
+
+        arr.sort(compareReverse);
+
+        console.log(arr);
+    */
+
+
+    /*
+        //------------------------оставить в массиве диапазон от a до b ------------------------------------
+        let arr = [5, 3, 8, 1];
+
+        function filterRangeInPlace(arr, a, b) {
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] < a || arr[i] > b) {
+                    arr.splice(i--, 1);
+                }
             }
         }
-    }
 
-    filterRangeInPlace(arr, 1, 4);
-    console.log(arr);
-*/
+        filterRangeInPlace(arr, 1, 4);
+        console.log(arr);
+    */
 
 
-/*    //--------------------------Удаление класса у элемента--------------------
-    let obj = {
-        className: 'my menu menu'
-    };
+    /*    //--------------------------Удаление класса у элемента--------------------
+        let obj = {
+            className: 'my menu menu'
+        };
 
-    function removeClass(obj, className) {
-        let classNameArr = obj.className.split(" ");
-        for (let i = 0; i < classNameArr.length; i++) {
-            if (classNameArr[i] == className) {
-                classNameArr.splice(i, 1);
-                i--;
+        function removeClass(obj, className) {
+            let classNameArr = obj.className.split(" ");
+            for (let i = 0; i < classNameArr.length; i++) {
+                if (classNameArr[i] == className) {
+                    classNameArr.splice(i, 1);
+                    i--;
+                }
             }
+            obj.className = classNameArr.join(" ");
         }
-        obj.className = classNameArr.join(" ");
-    }
 
-    removeClass(obj, 'menu');
-    console.log(obj.className);*/
+        removeClass(obj, 'menu');
+        console.log(obj.className);*/
 
 
-/*--------------------------Преобразование стилей CSS в camelCase--------------------
-    function camelize(className) {
-        let classNameArr = className.split('-');
-        for (let i = 1; i < classNameArr.length; i++){
-            classNameArr[i] = classNameArr[i][0].toUpperCase() + classNameArr[i].slice(1);
+    /*--------------------------Преобразование стилей CSS в camelCase--------------------
+        function camelize(className) {
+            let classNameArr = className.split('-');
+            for (let i = 1; i < classNameArr.length; i++){
+                classNameArr[i] = classNameArr[i][0].toUpperCase() + classNameArr[i].slice(1);
+            }
+            return classNameArr.join("");
         }
-        return classNameArr.join("");
-    }
 
-    console.log(camelize("background-color"));
-    console.log(camelize("list-style-image"));
-    console.log(camelize("-webkit-transition"));
-*/
+        console.log(camelize("background-color"));
+        console.log(camelize("list-style-image"));
+        console.log(camelize("-webkit-transition"));
+    */
 
 
 </script>
