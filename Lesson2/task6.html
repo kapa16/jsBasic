@@ -9,12 +9,12 @@
      */
     function getCurrencyName(number) {
 
-        let divRest = number % 100;
+        const divRest = Math.abs(number) % 100;
         if (divRest > 10 && divRest < 20) {
             return "рублей";
         }
 
-        switch (number % 10) {
+        switch (Math.abs(number) % 10) {
             case 1:
                 return 'рубль';
             case 2:
