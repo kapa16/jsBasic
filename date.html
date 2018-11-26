@@ -2,6 +2,91 @@
 <script>
     "use strict";
 
-    const date = new Date(2012, 1, 20, 3, 12);
-    alert(date);
+    //-------------------------------- Сколько секунд до завтра ------------------------------------------
+
+    function getSecondsToTomorrow() {
+        let now = new Date();
+        let currentDateBegin = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+        let diff = currentDateBegin - now;
+        return Math.floor(diff / 1000);
+    }
+
+    console.log(getSecondsToTomorrow());
+
+/*    //--------------------------------- Сколько секунд уже прошло сегодня? -----------------------------
+
+    function getSecondsToday() {
+        let currentDate = new Date();
+        // let currentDateBegin = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+        // let diff = currentDate - currentDateBegin;
+        // return Math.floor(diff / 1000);
+
+        return currentDate.getHours() * 3600 + currentDate.getMinutes() * 60 + currentDate.getSeconds();
+    }
+
+    console.log(getSecondsToday());*/
+
+
+    /*
+        //--------------------------------- Последний день месяца -------------------------------------------
+
+        function getLastDayOfMonth(year, month) {
+            const date = new Date(year, month + 1, 0);
+            //date.setDate(date.getDate() - 1);
+            return date.getDate();
+        }
+
+        console.log(getLastDayOfMonth(2012, 1));*/
+
+    /*
+        //--------------------------------- День указанное количество дней назад ----------------------------
+        let date = new Date(2015, 0, 2);
+
+        function getDateAgo(date, daysAgo) {
+            let dateNew = new Date(date);
+            dateNew.setDate(date.getDate() - daysAgo);
+            return dateNew.getDate();
+        }
+
+        console.log(getDateAgo(date, 1)); // 1, (1 января 2015)
+        console.log(getDateAgo(date, 100)); // 31, (31 декабря 2014)
+        console.log(getDateAgo(date, 365)); // 2, (2 января 2014)*/
+
+    /*
+        //--------------------------------- Задать дату, вывести день недели ---------------------------------
+        const date = new Date(); //Date(2012, 1, 20, 3, 12);
+
+        // Название дня недели
+        function getWeekDay(date) {
+            const weekDays = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+            return weekDays[date.getDay()];
+        }
+
+        //Номер дня недели
+        function getLocalDay(date) {
+            // const weekDays = ['7', '1', '2', '3', '4', '5', '6'];
+            // return weekDays[date.getDay()];
+            let day = date.getDay();
+            // if (day === 0) {
+            //     day = 7;
+            // }
+            // return day;
+            return day === 0 ? 7 : day;
+        }
+
+        console.log(date);
+        console.log(getWeekDay(date));
+        console.log(getLocalDay(date));
+        //Для современных браузеров
+        console.log(date.toLocaleString('ru', {weekday: 'short'}));
+        console.log(date.toLocaleString('ru', {era: 'long'})); //short
+        console.log(date.toLocaleString('ru', {year: 'numeric'}));
+        console.log(date.toLocaleString('ru', {month: 'long'})); //short
+        console.log(date.toLocaleString('ru', {day: 'numeric'}));
+        console.log(date.toLocaleString('ru', {weekday: 'long'}));
+        console.log(date.toLocaleString('ru', {timezone: 'UTC'}));
+        console.log(date.toLocaleString('ru', {hour: 'numeric'}));
+        console.log(date.toLocaleString('ru', {minute: 'numeric'}));
+        console.log(date.toLocaleString('ru', {second: 'numeric'}));
+        */
 </script>

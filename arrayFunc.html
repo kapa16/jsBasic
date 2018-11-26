@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<meta charset="UTF-8">
+<script>
+    "use strict";
+
+    //-----------------------Массив частичных сумм (каждая след. позиция содержит суммы предудущих элементов---------
+    let arr = [ 1, 2, 3, 4, 5 ];
+    
+    function getSums(arr) {
+        let arrSum = [];
+        if (!arr.length) return arrSum;
+
+        let total = arr.reduce(function (sum, current) {
+            arrSum.push(sum);
+            return sum + current;
+        });
+        arrSum.push(total);
+        return arrSum;
+    }
+
+    console.log(getSums(arr));
+
+/*
+    //-----------------------------------------Перепишите цикл через map--------------------------------
+    let arr = ["Есть", "жизнь", "на", "Марсе"];
+
+    //var arrLength = [];
+    // for (var i = 0; i < arr.length; i++) {
+    //     arrLength[i] = arr[i].length;
+    // }
+
+    let arrLength = arr.map(function (item) {
+        return item.length;
+    });
+    
+    alert( arrLength ); // 4,5,2,5
+
+*/
+
+</script>
