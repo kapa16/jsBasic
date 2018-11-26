@@ -2,7 +2,27 @@
 <script>
     "use strict";
 
-    //-------------------------------- Сколько секунд до завтра ------------------------------------------
+    let d = new Date(2014, 0, 30); // 30 января 2014
+
+    function addZero(number) {
+        number = number.toString();
+
+        if (number.length < 2) {
+            return '0' + number;
+        }
+        return number;
+    }
+    function formatDate(date) {
+        let day = addZero(date.getDate());
+        let mon = addZero(date.getMonth() + 1);
+        let year = addZero(date.getFullYear() % 100);
+        return `${day}.${mon}.${year}`;
+    }
+
+    alert( formatDate(d) ); // '30.01.14'
+
+
+/*    //-------------------------------- Сколько секунд до завтра ------------------------------------------
 
     function getSecondsToTomorrow() {
         let now = new Date();
@@ -11,7 +31,7 @@
         return Math.floor(diff / 1000);
     }
 
-    console.log(getSecondsToTomorrow());
+    console.log(getSecondsToTomorrow());*/
 
 /*    //--------------------------------- Сколько секунд уже прошло сегодня? -----------------------------
 
