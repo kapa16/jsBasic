@@ -11,6 +11,8 @@
         arrSum = 0,
         indexArr = 0;
 
+    //Вариант 1
+
     /**
      * Функция используется для суммирования элементов массива с помощью метода reduce()
      * @param {number} total - переменная аккумулирующая сумму
@@ -37,8 +39,38 @@
 
     const maxArr = arr[indexArr].sort(sortFunc);
 
+    console.log('Вариант 1:');
     console.log(`Индекс массива с максимальной суммой элементов: ${indexArr}, сумма его элеменов равна ${maxSum}`);
-    console.log(`Минимальное значение в массиве с индексом: ${indexArr} - ${maxArr[0]}`);
-    console.log(`Максимальное значение в массиве с индексом: ${indexArr} - ${maxArr[maxArr.length - 1]}`);
+    console.log(`Минимальное значение в массиве с индексом ${indexArr} - ${maxArr[0]}`);
+    console.log(`Максимальное значение в массиве с индексом ${indexArr} - ${maxArr[maxArr.length - 1]}`);
+
+
+    //Вариант 2
+
+    maxSum = -Infinity;
+    arrSum = 0;
+    indexArr = 0;
+    let minValue = Infinity,
+        minCurrent = Infinity;
+
+    for (let i = 0; i < arr.length; i++) {
+        arrSum = 0;
+        minCurrent = Infinity;
+        for (let j = 0; j < arr[i].length; j++) {
+            arrSum += arr[i][j];
+            if (minCurrent > arr[i][j]) {
+                minCurrent = arr[i][j];
+            }
+        }
+        if (arrSum > maxSum) {
+            maxSum = arrSum;
+            indexArr = i;
+            minValue = minCurrent;
+        }
+    }
+
+    console.log('Вариант 2:');
+    console.log(`Индекс массива с максимальной суммой элементов: ${indexArr}, сумма его элеменов равна ${maxSum}`);
+    console.log(`Минимальное значение в массиве с индексом ${indexArr} - ${minValue}`);
 
 </script>
