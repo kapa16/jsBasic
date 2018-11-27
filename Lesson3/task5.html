@@ -1,10 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<meta charset="UTF-8">
+<script>
+    "use strict";
+
+    const arr = [
+        [2, 4, 6],
+        [1, 5, 10],
+        [7, 4, 1],
+    ];
+    let maxSum = -Infinity,
+        arrSum = 0,
+        indexArr = 0;
+
+    /**
+     * Функция используется для суммирования элементов массива с помощью метода reduce()
+     * @param {number} total - переменная аккумулирующая сумму
+     * @param {number} value - текущий элемент массива
+     * @returns {number} - возвращается сумма массива
+     */
+    const sumFunc = (total, value) => total + value;
+
+    /**
+     * Функция для метода sort(), сортирующая массив с числовыми значениями по возрастанию
+     * @param {number} a - Первый элемент массива, переданный для сравнения
+     * @param {number} b - Второй элемент массива, переданный для сравнения
+     * @returns {number} - возвращает положительное или отрицательное значение (либо 0)
+     */
+    const sortFunc = (a, b) => a - b;
+
+    for (let i = 0; i < arr.length; i++) {
+        arrSum = arr[i].reduce(sumFunc);
+        if (arrSum > maxSum) {
+            maxSum = arrSum;
+            indexArr = i;
+        }
+    }
+
+    const maxArr = arr[indexArr].sort(sortFunc);
+
+    console.log(`Индекс массива с максимальной суммой элементов: ${indexArr}, сумма его элеменов равна ${maxSum}`);
+    console.log(`Минимальное значение в массиве с индексом: ${indexArr} - ${maxArr[0]}`);
+    console.log(`Максимальное значение в массиве с индексом: ${indexArr} - ${maxArr[maxArr.length - 1]}`);
+
+</script>
