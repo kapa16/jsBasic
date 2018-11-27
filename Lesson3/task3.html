@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<meta charset="UTF-8">
+<script>
+    "use strict";
+
+    const rowCount = 20;
+    let rowStr = '';
+
+    for (let i = 1; i <= rowCount; i++) {
+        rowStr = '';
+        for (let j = 0; j < i; j++) {
+            rowStr += 'x';
+        }
+        console.log(rowStr);
+    }
+</script>
