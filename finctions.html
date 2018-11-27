@@ -1,10 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<meta charset="UTF-8">
+<script>
+    "use strict";
+
+    //-----------------------------Строковый буфер
+
+    function makeBuffer() {
+        let strBuffer = [];
+
+        function buffer(str) {
+            if (str === undefined) {
+                return strBuffer.join('');
+            }
+            strBuffer.push('' + str);
+        }
+
+        buffer.clear = function () {
+            strBuffer.length = 0;
+        };
+        return buffer;
+    }
+
+    let buffer = makeBuffer();
+
+    // добавить значения к буферу
+    buffer('Замыкания');
+    buffer(' Использовать');
+    buffer(' Нужно!');
+
+    // получить текущее значение
+    console.log(buffer()); // Замыкания Использовать Нужно!
+
+    buffer.clear();
+    buffer(0);
+    buffer(1);
+    buffer(0);
+
+    console.log(buffer()); // '010'
+
+
+    /*  //----------------------------- Сложение
+        function sum(a) {
+            return function (b) {
+                return a + b;
+            }
+        }
+
+        document.write(sum(5)(-1));*/
+</script>
