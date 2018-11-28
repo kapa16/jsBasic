@@ -2,74 +2,161 @@
 <script>
     "use strict";
 
-    //----------------------------- Сортировка объекта
+    //----------------------------- Калькулятор
+    const calculator = {
+        a: 0,
+        b: 0,
+        read: function () {
+            this.a = +prompt('Введите первое число', 0);
+            this.b = +prompt('Введите второе число', 0);
+        },
+        sum: function () {
+            return this.a + this.b;
+        },
+        mul: function () {
+            return this.a * this.b;
+        }
+    };
 
-    let users = [{
-        name: "Вася",
-        surname: 'Иванов',
-        age: 20
-    }, {
-        name: "Петя",
-        surname: 'Чапаев',
-        age: 25
-    }, {
-        name: "Маша",
-        surname: 'Медведева',
-        age: 18
-    }];
+    calculator.read();
+    alert( calculator.sum() );
+    alert( calculator.mul() );
 
-    function byField(property) {
-        return function (a, b) {
-            return a[property] > b[property] ? 1 : -1;
-        };
+    /*
+
+    //----------------------------- Армия функций
+    function makeArmy() {
+
+        const shooters = [];
+
+        for (let i = 0; i < 10; i++) {
+            const shooter = function () { // функция-стрелок
+                alert(i); // выводит свой номер
+            };
+            shooters.push(shooter);
+        }
+        return shooters;
     }
 
+    let army = makeArmy();
 
-    users.sort(byField('name'));
-    users.forEach(function(user) {
-        console.log( user.name );
-    }); // Вася, Маша, Петя
-
-    users.sort(byField('age'));
-    users.forEach(function(user) {
-        console.log( user.name );
-    }); // Маша, Вася, Петя
+    army[0](); // стрелок выводит 10, а должен 0
+    army[5](); // стрелок выводит 10...
+    // .. все стрелки выводят 10 вместо 0,1,2...9
+*/
 
 
-/*    //-----------------------------Строковый буфер
+    /*
+        //----------------------------- Фильтрация через функцию
 
-    function makeBuffer() {
-        let strBuffer = [];
+        function filter(arr, func) {
+            let newArr = [],
+                value;
 
-        function buffer(str) {
-            if (str === undefined) {
-                return strBuffer.join('');
+            for (let i = 0; i < arr.length; i++) {
+                value = arr[i];
+                if (func(value)) {
+                    newArr.push(value);
+                }
             }
-            strBuffer.push('' + str);
+            return newArr;
         }
 
-        buffer.clear = function () {
-            strBuffer.length = 0;
-        };
-        return buffer;
-    }
+        function inBetween(a, b) {
+            return (value) => (value >= a && value <= b);
+        }
 
-    let buffer = makeBuffer();
+        function inArray(arr) {
+            return function (value) {
+                //return arr.indexOf(value) != -1;
+                for (let i = 0; i < arr.length; i++) {
+                    if (value === arr[i]) return true;
+                }
+                return false;
+            }
+        }
 
-    // добавить значения к буферу
-    buffer('Замыкания');
-    buffer(' Использовать');
-    buffer(' Нужно!');
+        let arr = [1, 2, 3, 4, 5, 6, 7];
 
-    // получить текущее значение
-    console.log(buffer()); // Замыкания Использовать Нужно!
+        alert(filter(arr, function(a) {
+            return a % 2 == 0;
+        })); // 2,4,6
 
-    buffer.clear();
-    buffer(0);
-    buffer(1);
-    buffer(0);
+        alert( filter(arr, inBetween(3, 6)) ); // 3,4,5,6
 
-    console.log(buffer()); // '010'*/
+        alert( filter(arr, inArray([1, 2, 10])) ); // 1,2
+    */
+
+
+    /*
+        //----------------------------- Сортировка объекта
+
+        let users = [{
+            name: "Вася",
+            surname: 'Иванов',
+            age: 20
+        }, {
+            name: "Петя",
+            surname: 'Чапаев',
+            age: 25
+        }, {
+            name: "Маша",
+            surname: 'Медведева',
+            age: 18
+        }];
+
+        function byField(property) {
+            return function (a, b) {
+                return a[property] > b[property] ? 1 : -1;
+            };
+        }
+
+
+        users.sort(byField('name'));
+        users.forEach(function(user) {
+            console.log( user.name );
+        }); // Вася, Маша, Петя
+
+        users.sort(byField('age'));
+        users.forEach(function(user) {
+            console.log( user.name );
+        }); // Маша, Вася, Петя*/
+
+
+    /*    //-----------------------------Строковый буфер
+
+        function makeBuffer() {
+            let strBuffer = [];
+
+            function buffer(str) {
+                if (str === undefined) {
+                    return strBuffer.join('');
+                }
+                strBuffer.push('' + str);
+            }
+
+            buffer.clear = function () {
+                strBuffer.length = 0;
+            };
+            return buffer;
+        }
+
+        let buffer = makeBuffer();
+
+        // добавить значения к буферу
+        buffer('Замыкания');
+        buffer(' Использовать');
+        buffer(' Нужно!');
+
+        // получить текущее значение
+        console.log(buffer()); // Замыкания Использовать Нужно!
+
+        buffer.clear();
+        buffer(0);
+        buffer(1);
+        buffer(0);
+
+        console.log(buffer()); // '010'*/
 
 
     /*  //----------------------------- Сложение
