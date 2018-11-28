@@ -2,7 +2,41 @@
 <script>
     "use strict";
 
-    //-----------------------------Строковый буфер
+    //----------------------------- Сортировка объекта
+
+    let users = [{
+        name: "Вася",
+        surname: 'Иванов',
+        age: 20
+    }, {
+        name: "Петя",
+        surname: 'Чапаев',
+        age: 25
+    }, {
+        name: "Маша",
+        surname: 'Медведева',
+        age: 18
+    }];
+
+    function byField(property) {
+        return function (a, b) {
+            return a[property] > b[property] ? 1 : -1;
+        };
+    }
+
+
+    users.sort(byField('name'));
+    users.forEach(function(user) {
+        console.log( user.name );
+    }); // Вася, Маша, Петя
+
+    users.sort(byField('age'));
+    users.forEach(function(user) {
+        console.log( user.name );
+    }); // Маша, Вася, Петя
+
+
+/*    //-----------------------------Строковый буфер
 
     function makeBuffer() {
         let strBuffer = [];
@@ -35,7 +69,7 @@
     buffer(1);
     buffer(0);
 
-    console.log(buffer()); // '010'
+    console.log(buffer()); // '010'*/
 
 
     /*  //----------------------------- Сложение
