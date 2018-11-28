@@ -11,7 +11,7 @@
         arrSum = 0,
         indexArr = 0;
 
-    //Вариант 1
+    //Вариант 1 
 
     /**
      * Функция используется для суммирования элементов массива с помощью метода reduce()
@@ -37,12 +37,10 @@
         }
     }
 
-    const maxArr = arr[indexArr].sort(sortFunc);
-
     console.log('Вариант 1:');
     console.log(`Индекс массива с максимальной суммой элементов: ${indexArr}, сумма его элеменов равна ${maxSum}`);
-    console.log(`Минимальное значение в массиве с индексом ${indexArr} - ${maxArr[0]}`);
-    console.log(`Максимальное значение в массиве с индексом ${indexArr} - ${maxArr[maxArr.length - 1]}`);
+    console.log(`Минимальное значение в массиве с индексом ${indexArr} - ${Math.min.apply(null, arr[indexArr])}`);
+    console.log(`Максимальное значение в массиве с индексом ${indexArr} - ${Math.max.apply(null, arr[indexArr])}`);
 
 
     //Вариант 2
