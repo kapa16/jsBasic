@@ -3,13 +3,17 @@
     "use strict";
 
     const rowCount = 20;
-    let rowStr = '';
+    // let rowStr = '';
 
-    for (let i = 1; i <= rowCount; i++) {
-        rowStr = '';
-        for (let j = 0; j < i; j++) {
-            rowStr += 'x';
-        }
+    // for (let i = 1; i <= rowCount; i++) {
+    //     rowStr = '';
+    //     for (let j = 0; j < i; j++) {
+    //         rowStr += 'x';
+    //     }
+    //     console.log(rowStr);
+    // }
+
+    for (let i = 0, rowStr = 'X'; i < rowCount; i++, rowStr += 'XX') {
         console.log(rowStr);
     }
 </script>
