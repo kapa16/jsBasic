@@ -2,9 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Вопросы</title>
 </head>
 <body>
-$END$
+<script>
+    "use strict";
+
+    /**
+     * Конструктор вопросов
+     * @param {string} questionStr - текст вопроса
+     * @param {string} answer1 - первый вариант ответа
+     * @param {string} answer2 - второй вариант ответа
+     * @param {string} answer3 - третий вариант ответа
+     * @param {string} answer4 - четвертый вариант ответа
+     * @param {string} RightAnswer - индекс правильного ответа 'a', 'b', 'c', 'd'
+     * @constructor
+     */
+    const Question = function (questionStr, answer1, answer2, answer3, answer4, RightAnswer) {
+        let question = questionStr;
+        let answers = {
+            'a': answer1,
+            'b': answer2,
+            'c': answer3,
+            'd': answer4,
+        };
+        let indexRightAnswer = RightAnswer;
+
+
+    };
+
+    const game = {
+        questions: [],
+        countRightAnswers: 0,
+
+        init() {
+            this.questions.push(new Question('Зимой и летом одним цветом', 'береза', 'дуб', 'ель', 'ива', 'c'));
+            this.questions.push(new Question('Без окон, без дверей полна горница людей', 'тыква', 'огурец', 'яблоко', 'картофель', 'b'));
+            this.questions.push(new Question('Летом серый, зимой белы', 'заяц', 'волк', 'лиса', 'енот', 'a'));
+            this.questions.push(new Question('Висит гружа, нельзя скушать', 'яблоко', 'лампочка', 'неспелая груша', 'папье маше', 'b'));
+            this.questions.push(new Question('Еще какой-то вопрос, надоело придумывать', 'первый', 'второй', 'третий', 'четертый', 'd'));
+        },
+
+        run() {
+            this.init();
+            alert('Добро пожаловать в игру "Вопросы"');
+
+            for (let i = 0; i < this.questions.length; i++) {
+                prompt()
+            }
+        }
+    };
+
+    game.run();
+
+</script>
 </body>
 </html>
