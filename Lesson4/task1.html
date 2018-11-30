@@ -2,9 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Task 1</title>
 </head>
 <body>
-$END$
+
+<script>
+    "use strict";
+
+    /**
+     * Функция перобразует трехзначное целое положительное число в объект
+     * @param {number} number - число для преобразования
+     * @returns {object} - возращает объект
+     */
+    function numberToObject(number) {
+
+        let objectNumber = {};
+
+        if (Number.isNaN(+number) || number < 0 || number > 999 || !Number.isInteger(number)) {
+            console.log('Необходимо передать число в диапазоне от 0 до 999 включительно');
+            return objectNumber;
+        }
+
+        const arrNumber = ('000' + number.toString()).slice(-3).split('');
+        objectNumber = {
+            firstDigit: arrNumber[2],
+            secondDigit: arrNumber[1],
+            thirdDigit: arrNumber[0]
+        }
+
+        return objectNumber;
+    }
+
+    console.log(numberToObject(0));
+    console.log(numberToObject(45));
+    console.log(numberToObject(8));
+    console.log(numberToObject(912));
+    console.log(numberToObject(-45));
+    console.log(numberToObject('eww'));
+    console.log(numberToObject(23.76));
+
+</script>
+
 </body>
 </html>
