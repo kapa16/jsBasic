@@ -2,25 +2,149 @@
 <script>
     "use strict";
 
-    //----------------------------- Калькулятор
-    const calculator = {
-        a: 0,
-        b: 0,
-        read: function () {
-            this.a = +prompt('Введите первое число', 0);
-            this.b = +prompt('Введите второе число', 0);
-        },
-        sum: function () {
-            return this.a + this.b;
-        },
-        mul: function () {
-            return this.a * this.b;
-        }
-    };
+    //--------------------------------- Калькулятор 2
 
-    calculator.read();
-    alert( calculator.sum() );
-    alert( calculator.mul() );
+    /**
+     * Конструктор функции калькулятора, принимает строку вида "оператор знак оператор", производит необходимые
+     * вычисления, в зависимости от знака. В стандарте поддерживает сложение "+" и вычитание "-"
+     * @constructor
+     */
+    function Calculator() {
+
+        let methods = {
+            '+': function (a, b) {
+                return a + b;
+            },
+            '-': function (a, b) {
+                return a - b;
+            }
+        };
+
+        this.calculate = function (str) {
+            const arr = str.split(' ');
+            let a = parseFloat(arr[0]),
+                b = parseFloat(arr[2]),
+                sign = arr[1];
+
+            if (!methods[sign] || Number.isNaN(a) || Number.isNaN(b)){
+                return NaN;
+            }
+            return methods[sign](a, b);
+        };
+
+        this.addMethod = function (newSign, newFunc) {
+            methods[newSign] = newFunc;
+        }
+    }
+
+    let calc = new Calculator;
+
+    console.log(calc.calculate("3 + 7")); // 10
+    console.log(calc.calculate("5 - 3")); // 2
+
+    let powerCalc = new Calculator;
+    powerCalc.addMethod("*", function (a, b) {
+        return a * b;
+    });
+    powerCalc.addMethod("/", function (a, b) {
+        return a / b;
+    });
+    powerCalc.addMethod("**", function (a, b) {
+        return Math.pow(a, b);
+    });
+
+
+    let result = powerCalc.calculate("2 ** 3");
+    console.log(result); // 8
+    console.log(powerCalc.calculate("2 * 3")); //
+    console.log(powerCalc.calculate("52 / 3")); //
+
+    /*    //--------------------------------- Создать Accumulator при помощи конструктора
+
+        function Accumulator (startingValue) {
+            this.value = startingValue;
+
+            this.read = function () {
+                this.value += +prompt('x?',0);
+            }
+        }
+
+        let accumulator = new Accumulator(1); // начальное значение 1
+        accumulator.read(); // прибавит ввод prompt к текущему значению
+        accumulator.read(); // прибавит ввод prompt к текущему значению
+        alert( accumulator.value ); // выведет текущее значение*/
+
+    /*   //------------------------------- Конструктор калькулятора
+
+       function Calculator () {
+           this.a = 0;
+           this.b = 0;
+           this.read = function () {
+               this.a = +prompt('Введите первое число', 0);
+               this.b = +prompt('Введите второе число', 0);
+           };
+           this.sum = function () {
+               return this.a + this.b;
+           };
+           this.mul = function () {
+               return this.a * this.b;
+           }
+       }
+
+       let calculator = new Calculator();
+       calculator.read();
+
+       alert( "Сумма=" + calculator.sum() );
+       alert( "Произведение=" + calculator.mul() );
+   */
+
+
+    /*
+        //-------------------------------Сумма произвольного количества скобок
+
+        function sum (a) {
+            let curSum = a;
+
+            function f(b) {
+                curSum += b;
+                return f;
+            }
+
+            f.toString = function () {
+                return curSum;
+            };
+
+            return f;
+        }
+        console.log(sum(1)(2));
+        console.log(sum(1)(2)(3));
+        console.log(sum(5)(-1)(2));
+        console.log(sum(6)(-1)(-2)(-3));
+        console.log(sum(0)(1)(2)(3)(4)(5));
+    */
+
+
+    /*
+        //----------------------------- Калькулятор
+        const calculator = {
+            a: 0,
+            b: 0,
+            read: function () {
+                this.a = +prompt('Введите первое число', 0);
+                this.b = +prompt('Введите второе число', 0);
+            },
+            sum: function () {
+                return this.a + this.b;
+            },
+            mul: function () {
+                return this.a * this.b;
+            }
+        };
+
+        calculator.read();
+        alert( calculator.sum() );
+        alert( calculator.mul() );
+    */
 
     /*
 
