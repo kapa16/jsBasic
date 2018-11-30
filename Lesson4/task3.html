@@ -2,9 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="main.css">
     <title>Вопросы</title>
 </head>
 <body>
+
+<section class="container">
+    <h1 id="heading" class="heading">Добро пожаловать в игру &laquo;Вопросы&raquo;</h1>
+    <div class="btn" onclick="beginGame(this)">Начать</div>
+    <div id="info-game"  class="hidden">
+        <div id="question"></div>
+        <div class="answers">
+            <div class="answer btn" id="answer1"></div>
+            <div class="answer btn" id="answer2"></div>
+            <div class="answer btn" id="answer3"></div>
+            <div class="answer btn" id="answer4"></div>
+        </div> id=answer
+    </div>
+</section>
+
+<script src="main.js"></script>
 <script>
     "use strict";
 
@@ -19,36 +37,122 @@
      * @constructor
      */
     const Question = function (questionStr, answer1, answer2, answer3, answer4, RightAnswer) {
-        let question = questionStr;
-        let answers = {
+        this.question = questionStr;
+        this.answers = {
             'a': answer1,
             'b': answer2,
             'c': answer3,
             'd': answer4,
         };
-        let indexRightAnswer = RightAnswer;
-
-
+        this.indexRightAnswer = RightAnswer;
     };
 
+    /**
+     * Функция возвращает нужное склонение слова, в зависимости от числительного
+     * @param {number} number - сумма в рублях (целое число)
+     * @param {string} word1 - слово для одного
+     * @param {string} word2 - слово для двух - четырех
+     * @param {string} wordElse - слово для остальных вариантов
+     * @returns {string} возвращяет слово
+     */
+    function getWordByNumber(number, word1, word2, wordElse) {
+
+        const divRest = Math.abs(number) % 100;
+        if (divRest > 10 && divRest < 20) {
+            return wordElse;
+        }
+
+        switch (Math.abs(number) % 10) {
+            case 1:
+                return word1;
+            case 2:
+            case 3:
+            case 4:
+                return word2;
+            default:
+                return wordElse;
+        }
+    }
+
+    /**
+     * Объект игры, зжесь будут методы игры в общем
+     * @property {Array} questions - массив с вопросами
+     * @property {int} countRightAnswers - количество правильных ответов
+     */
     const game = {
         questions: [],
         countRightAnswers: 0,
 
+        /**
+         * Первоначальное заполнение массива вопросов
+         */
         init() {
-            this.questions.push(new Question('Зимой и летом одним цветом', 'береза', 'дуб', 'ель', 'ива', 'c'));
-            this.questions.push(new Question('Без окон, без дверей полна горница людей', 'тыква', 'огурец', 'яблоко', 'картофель', 'b'));
-            this.questions.push(new Question('Летом серый, зимой белы', 'заяц', 'волк', 'лиса', 'енот', 'a'));
-            this.questions.push(new Question('Висит гружа, нельзя скушать', 'яблоко', 'лампочка', 'неспелая груша', 'папье маше', 'b'));
-            this.questions.push(new Question('Еще какой-то вопрос, надоело придумывать', 'первый', 'второй', 'третий', 'четертый', 'd'));
+            this.questions.push(new Question(
+                'Зимой и летом одним цветом',
+                'береза', 'дуб', 'ель', 'ива',
+                'c'));
+            this.questions.push(new Question(
+                'Без окон, без дверей полна горница людей',
+                'тыква', 'огурец', 'яблоко', 'картофель',
+                'b'));
+            this.questions.push(new Question(
+                'Летом серый, зимой белы',
+                'заяц', 'волк', 'лиса', 'енот',
+                'a'));
+            this.questions.push(new Question(
+                'Висит груша, нельзя скушать',
+                'яблоко', 'лампочка', 'неспелая груша', 'папье маше',
+                'b'));
+            this.questions.push(new Question(
+                'Еще какой-то вопрос, надоело придумывать',
+                'первый', 'второй', 'третий', 'четертый',
+                'd'));
         },
 
+        /**
+         * Запуск игры
+         */
         run() {
             this.init();
-            alert('Добро пожаловать в игру "Вопросы"');
+            document.getElementById('question').innerHTML = 'Игра &laquo;Вопросы&raquo';
 
+            this.askPlayer();
+
+            //const wordForAlert = getWordByNumber(this.countRightAnswers, 'вопрос', 'вопроса', 'вопросов');
+            //alert(`Вы ответили на ${this.countRightAnswers} ${wordForAlert}`);
+        },
+
+        /**
+         * Задает вопросы игроку
+         */
+        askPlayer: function () {
             for (let i = 0; i < this.questions.length; i++) {
-                prompt()
+                let currentQuestion = this.questions[i];
+                let strForPrompt = `Вопрос № ${i + 1}:<br><br>`;
+                strForPrompt += `${currentQuestion.question}<br><br>`;
+                document.getElementById('question').innerHTML = strForPrompt;
+
+                let j = 0;
+                for (const answerKey in currentQuestion.answers) {
+                    j++;
+                    //strForPrompt += `${answerKey}. ${currentQuestion.answers[answerKey]}<br>`;
+                    let textAnswer = `${answerKey}. ${currentQuestion.answers[answerKey]}`;
+                    document.getElementById('answer' + j).innerHTML = textAnswer;
+                }
+
+
+                //this.getAndCheckAnswer(currentQuestion, strForPrompt);
+            }
+        },
+
+        getAndCheckAnswer(currentQuestion, strForPrompt) {
+            let playerAnswer = prompt(strForPrompt);
+
+            if (playerAnswer === currentQuestion.indexRightAnswer) {
+                alert('Правильно');
+                this.countRightAnswers++;
+            }  else {
+                alert('Не верно');
             }
         }
     };

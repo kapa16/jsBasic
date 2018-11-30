@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    "use strict";
+
+    let numbers = [
+        [8, 40, 10],
+        [1, 50, 20],
+        [7, 5, 1],
+    ];
+
+    let sum;
+
+    let maxSum = 0;
+    let minSum = Infinity;
+
+    let maxSummIndex = 0;
+    let minSummIndex = 0;
+
+    for (let i = 0; i < numbers.length; i++) {
+        sum = 0;
+        let nm = numbers[i];
+
+        for (let n = 0; n < nm.length; n++) {
+            sum = sum + parseInt(nm[n]);
+        }
+
+        if (maxSum < sum) {
+            maxSum = sum;
+            maxSummIndex = i;
+        }
+
+        if (minSum > sum) {
+            minSum = sum;
+            minSummIndex = i;
+        }
+    }
+
+    console.log(maxSum);
+    console.log(maxSummIndex);
+
+    console.log(minSum);
+    console.log(minSummIndex);
+
+
+</script>
+</body>
+</html>
