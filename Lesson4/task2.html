@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Бродилка</title>
+    <meta charset="utf-8">
+    <title>Бродилка</title>
 </head>
 <body>
-  <script>
+<script>
     "use strict";
 
     /**
@@ -16,10 +16,10 @@
      * @property {int} startPositionY Начальная позиция игрока по Y координате.
      */
     const settings = {
-      rowsCount: 10,
-      colsCount: 10,
-      startPositionX: 0,
-      startPositionY: 0,
+        rowsCount: 10,
+        colsCount: 10,
+        startPositionX: 0,
+        startPositionY: 0,
     };
 
     /**
@@ -28,38 +28,79 @@
      * @property {int} y Позиция по Y-координате.
      */
     const player = {
-      x: null,
-      y: null,
+        x: null,
+        y: null,
 
-      /**
-       * Инициализация игрока и его метоположения.
-       */
-      init(startX, startY) {
-        this.x = startX;
-        this.y = startY;
-      },
+        /**
+         * Инициализация игрока и его метоположения.
+         */
+        init(startX, startY) {
+            this.x = startX;
+            this.y = startY;
+        },
 
-      /**
-       * Двигает игрока по переданному направлению.
-       * @param {int} direction Направление, в котором будет движение.
-       */
-      move(direction) {
-        // Определяем направление и обновляем местоположение игрока в зависимости от направления.
-        switch (direction) {
-          case 2:
-            this.y++;
-            break;
-          case 4:
-            this.x--;
-            break;
-          case 6:
-            this.x++;
-            break;
-          case 8:
-            this.y--;
-            break;
+        /**
+         * Двигает игрока по переданному направлению.
+         * @param {object} nextPoint - координаты следующей точки для перемещения
+         */
+        move(nextPoint) {
+            this.x = nextPoint.x;
+            this.y = nextPoint.y;
+        },
+
+        /**
+         * Получает координаты следующей позиции игрока
+         * @param {int} direction Направление, в котором будет движение.
+         * @returns {object} nextPoint - объект с координатами сдледующей позиции
+         */
+        getNextPosition(direction) {
+            const nextPoint = {
+                x: this.x,
+                y: this.y
+            };
+            switch (direction) {
+                case 2:
+                    nextPoint.y++;
+                    break;
+                case 4:
+                    nextPoint.x--;
+                    break;
+                case 6:
+                    nextPoint.x++;
+                    break;
+                case 8:
+                    nextPoint.y--;
+                    break;
+                case 1:
+                    nextPoint.y++;
+                    nextPoint.x--;
+                    break;
+                case 3:
+                    nextPoint.y++;
+                    nextPoint.x++;
+                    break;
+                case 7:
+                    nextPoint.y--;
+                    nextPoint.x--;
+                    break;
+                case 9:
+                    nextPoint.y--;
+                    nextPoint.x++;
+                    break;
+            }
+            return nextPoint;
+        },
+
+        /**
+         * Проверяет на возможность осуществления хода внутри игрового поля
+         * @param {object} nextPoint - координаты точки следующего хода
+         * @param {int} rowsCount - максимальное количество строк в поле
+         * @param {int} colsCount - максимальное количество колонок в поле
+         * @returns {boolean} - можно или нельзя пойти в следующую точку
+         */
+        canPlayerMakeStep(nextPoint, rowsCount, colsCount) {
+            return (nextPoint.x >= 0 && nextPoint.x < colsCount && nextPoint.y >= 0 && nextPoint.y < rowsCount);
         }
-      },
     };
 
     /**
@@ -68,89 +109,92 @@
      * @property {player} player Игрок, участвующий в игре.
      */
     const game = {
-      settings,
-      player,
+        settings,
+        player,
 
-      /**
-       * Запускает игру.
-       */
-      run() {
-        // Инициализируем игрока, ставим его начальное местоположение
-        this.player.init(this.settings.startPositionX, this.settings.startPositionY);
-        // Бесконечный цикл
-        while (true) {
-          // Отображаем нашу игру.
-          this.render();
+        /**
+         * Запускает игру.
+         */
+        run() {
+            // Инициализируем игрока, ставим его начальное местоположение
+            this.player.init(this.settings.startPositionX, this.settings.startPositionY);
+            // Бесконечный цикл
+            while (true) {
+                // Отображаем нашу игру.
+                this.render();
 
-          // Получаем направление от игрока.
-          const direction = this.getDirection();
+                // Получаем направление от игрока.
+                const direction = this.getDirection();
 
-          // Если игрок сказал что хочет выйти (набрал -1), значит выходим.
-          if (direction === -1) {
-            alert('До свидания.');
-            return;
-          }
+                // Если игрок сказал что хочет выйти (набрал -1), значит выходим.
+                if (direction === -1) {
+                    alert('До свидания.');
+                    return;
+                }
 
-          // Двигаем игрока.
-          this.player.move(direction);
-        }
-      },
-
-      /**
-       * Отображает игру в консоли.
-       */
-      render() {
-        // Сюда запишем все что надо отобразить.
-        let map = "";
-
-        // Цикл перебирает все строки, которые надо отобразить.
-        for (let row = 0; row < this.settings.rowsCount; row++) {
-          // В каждой строке отображаем для каждой колонки (x - клетка, o - игрок).
-          for (let col = 0; col < this.settings.colsCount; col++) {
-            // Проверяем, если на данной позиции должен быть и игрок, отображаем игрока, если нет - клетку.
-            if (this.player.y === row && this.player.x === col) {
-              map += 'o ';
-            } else {
-              map += 'x ';
+                const nextPoint = this.player.getNextPosition(direction);
+                if (this.player.canPlayerMakeStep(nextPoint, this.settings.rowsCount, this.settings.colsCount)) {
+                    // Двигаем игрока.
+                    this.player.move(nextPoint);
+                }
             }
-          }
-          // После того как отобразили всю строку делаем переход на следующую строку.
-          map += '\n';
-        }
+        },
 
-        // Чистим консоль.
-        console.clear();
-        // Выводим все что надо отобразить в игре.
-        console.log(map);
-      },
+        /**
+         * Отображает игру в консоли.
+         */
+        render() {
+            // Сюда запишем все что надо отобразить.
+            let map = "";
 
-      /**
-       * Получает и отдает направление от пользователя.
-       * @returns {int} Возвращаем направление, введенное пользователем.
-       */
-      getDirection() {
-        // Доступные значения ввода.
-        const availableDirections = [-1, 2, 4, 6, 8];
+            // Цикл перебирает все строки, которые надо отобразить.
+            for (let row = 0; row < this.settings.rowsCount; row++) {
+                // В каждой строке отображаем для каждой колонки (x - клетка, o - игрок).
+                for (let col = 0; col < this.settings.colsCount; col++) {
+                    // Проверяем, если на данной позиции должен быть и игрок, отображаем игрока, если нет - клетку.
+                    if (this.player.y === row && this.player.x === col) {
+                        map += 'o ';
+                    } else {
+                        map += 'x ';
+                    }
+                }
+                // После того как отобразили всю строку делаем переход на следующую строку.
+                map += '\n';
+            }
 
-        while (true) {
-          // Получаем от пользователя направление.
-          const direction = parseInt(prompt('Введите число, куда вы хотите переместиться, -1 для выхода.'));
+            // Чистим консоль.
+            console.clear();
+            // Выводим все что надо отобразить в игре.
+            console.log(map);
+        },
 
-          // Если направление не одно из доступных, то сообщаем что надо ввести корректные данные
-          // и начинаем новую итерацию.
-          if (!availableDirections.includes(direction)) {
-            alert(`Для перемещения необходимо ввести одно из чисел: ${availableDirections.join(', ')}.`);
-            continue;
-          }
+        /**
+         * Получает и отдает направление от пользователя.
+         * @returns {int} Возвращаем направление, введенное пользователем.
+         */
+        getDirection() {
+            // Доступные значения ввода.
+            const availableDirections = [-1, 1, 2, 3, 4, 6, 7, 8, 9];
 
-          // Если пользователь ввел корректное значение - отдаем его.
-          return direction;
-        }
-      },
+            while (true) {
+                // Получаем от пользователя направление.
+                const direction = parseInt(prompt('Введите число, куда вы хотите переместиться, -1 для выхода.'));
+
+                // Если направление не одно из доступных, то сообщаем что надо ввести корректные данные
+                // и начинаем новую итерацию.
+                if (!availableDirections.includes(direction)) {
+                    alert(`Для перемещения необходимо ввести одно из чисел: ${availableDirections.join(', ')}.`);
+                    continue;
+                }
+
+                // Если пользователь ввел корректное значение - отдаем его.
+                return direction;
+            }
+        },
     };
 
     // Запускаем игру.
     game.run();
-  </script>
+</script>
 </body>
 </html>
