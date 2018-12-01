@@ -10,16 +10,16 @@
 
 <section class="container">
     <h1 id="heading" class="heading">Добро пожаловать в игру &laquo;Вопросы&raquo;</h1>
-    <div id="begin" class="btn single" onclick="beginGame(this)">Начать</div>
+    <div id="begin" class="btn single" onclick="game.run()">Начать</div>
     <div id="info-game" class="hidden">
         <div id="question"></div>
         <div class="answers">
-            <div class="answer btn" id="answer1" onclick="game.checkAnswer('a')"></div>
-            <div class="answer btn" id="answer2" onclick="game.checkAnswer('b')"></div>
-            <div class="answer btn" id="answer3" onclick="game.checkAnswer('c')"></div>
-            <div class="answer btn" id="answer4" onclick="game.checkAnswer('d')"></div>
+            <div class="answer btn" id="answer1" onclick="game.checkAnswer(1)"></div>
+            <div class="answer btn" id="answer2" onclick="game.checkAnswer(2)"></div>
+            <div class="answer btn" id="answer3" onclick="game.checkAnswer(3)"></div>
+            <div class="answer btn" id="answer4" onclick="game.checkAnswer(4)"></div>
         </div>
-        <div class="btn" onclick="game.endGame()">закончить</div>
+        <div class="btn" onclick="game.gameOver()">закончить</div>
     </div>
 </section>
 
@@ -33,17 +33,12 @@
      * @param {string} answer2 - второй вариант ответа
      * @param {string} answer3 - третий вариант ответа
      * @param {string} answer4 - четвертый вариант ответа
-     * @param {string} RightAnswer - индекс правильного ответа 'a', 'b', 'c', 'd'
+     * @param {int} RightAnswer - индекс правильного ответа [1...4]
      * @constructor
      */
     const Question = function (questionStr, answer1, answer2, answer3, answer4, RightAnswer) {
         this.question = questionStr;
-        this.answers = {
-            'a': answer1,
-            'b': answer2,
-            'c': answer3,
-            'd': answer4,
-        };
+        this.answers = [answer1, answer2, answer3, answer4];
         this.indexRightAnswer = RightAnswer;
     };
 
@@ -77,6 +72,7 @@
     /**
      * Объект игры, зжесь будут методы игры в общем
      * @property {Array} questions - массив с вопросами
+     * @property {int} questionsCount - индекс текущего вопроса
      * @property {int} countRightAnswers - количество правильных ответов
      */
     const game = {
@@ -94,29 +90,31 @@
             this.questions.push(new Question(
                 'Зимой и летом одним цветом',
                 'береза', 'дуб', 'ель', 'ива',
-                'c'));
+                3));
             this.questions.push(new Question(
                 'Без окон, без дверей полна горница людей',
                 'тыква', 'огурец', 'яблоко', 'картофель',
-                'b'));
+                2));
             this.questions.push(new Question(
-                'Летом серый, зимой белы',
+                'Летом серый, зимой белый',
                 'заяц', 'волк', 'лиса', 'енот',
-                'a'));
+                1));
             this.questions.push(new Question(
                 'Висит груша, нельзя скушать',
                 'яблоко', 'лампочка', 'неспелая груша', 'папье маше',
-                'b'));
+                2));
             this.questions.push(new Question(
                 'Еще какой-то вопрос, надоело придумывать',
                 'первый', 'второй', 'третий', 'четертый',
-                'd'));
+                4));
         },
 
         /**
          * Запуск игры
          */
         run() {
+            document.getElementById('begin').classList.add('hidden');
+            document.getElementById('info-game').classList.add('visible');
             this.init();
             this.showInElement('heading', 'Игра &laquo;Вопросы&raquo;');
 
@@ -130,7 +128,7 @@
          */
         getQuestion() {
             if (++this.questionsCount === this.questions.length) {
-                this.endGame();
+                this.gameOver();
             } else {
                 this.showQuestion();
             }
@@ -177,7 +175,7 @@
 
         /**
          * Проверяет ответ игрока на правильность и сообщает верный ответ или нет
-         * @param {string} playerAnswer - индекс ответа игрока
+         * @param {int} playerAnswer - индекс ответа игрока
          */
         checkAnswer(playerAnswer) {
             if (playerAnswer === this.currentQuestion().indexRightAnswer) {
@@ -192,7 +190,7 @@
         /**
          * Заканчивает игру и выводит количество правильных ответов
          */
-        endGame() {
+        gameOver() {
             document.getElementById('info-game').classList.remove('visible');
             document.getElementById('begin').classList.remove('hidden');
             document.getElementById('begin').innerText = 'начать заново';
@@ -201,15 +199,6 @@
         }
     };
 
-    /**
-     * Начинает игру при нажатии на кнопку начала
-     * @param {object} elem- элемент кнопки, вывзвавшей функцию
-     */
-    function beginGame(elem) {
-        elem.classList.add('hidden');
-        document.getElementById('info-game').classList.add('visible');
-        game.run();
-    }
 
 </script>
 
