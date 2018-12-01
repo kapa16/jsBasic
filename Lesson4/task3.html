@@ -10,16 +10,16 @@
 
 <section class="container">
     <h1 id="heading" class="heading">Добро пожаловать в игру &laquo;Вопросы&raquo;</h1>
-    <div class="btn" onclick="beginGame(this)">Начать</div>
+    <div id="begin" class="btn single" onclick="beginGame(this)">Начать</div>
     <div id="info-game" class="hidden">
         <div id="question"></div>
         <div class="answers">
-            <div class="answer btn" id="answer1"></div>
-            <div class="answer btn" id="answer2"></div>
-            <div class="answer btn" id="answer3"></div>
-            <div class="answer btn" id="answer4"></div>
+            <div class="answer btn" id="answer1" onclick="game.checkAnswer('a')"></div>
+            <div class="answer btn" id="answer2" onclick="game.checkAnswer('b')"></div>
+            <div class="answer btn" id="answer3" onclick="game.checkAnswer('c')"></div>
+            <div class="answer btn" id="answer4" onclick="game.checkAnswer('d')"></div>
         </div>
-        id=answer
+        <div class="btn" onclick="game.endGame()">закончить</div>
     </div>
 </section>
 
@@ -81,13 +81,16 @@
      */
     const game = {
         questions: [],
-        questionsCount: 0,
+        questionsCount: -1,
         countRightAnswers: 0,
 
         /**
          * Первоначальное заполнение массива вопросов
          */
         init() {
+            this.questionsCount = -1;
+            this.countRightAnswers = 0;
+            this.questions = [];
             this.questions.push(new Question(
                 'Зимой и летом одним цветом',
                 'береза', 'дуб', 'ель', 'ива',
@@ -115,49 +118,97 @@
          */
         run() {
             this.init();
-            document.getElementById('question').innerHTML = 'Игра &laquo;Вопросы&raquo';
+            this.showInElement('heading', 'Игра &laquo;Вопросы&raquo;');
 
-            this.askPlayer();
-
-            //const wordForAlert = getWordByNumber(this.countRightAnswers, 'вопрос', 'вопроса', 'вопросов');
-            //alert(`Вы ответили на ${this.countRightAnswers} ${wordForAlert}`);
+            this.getQuestion();
         },
 
         /**
-         * Задает вопросы игроку
+         * Получает номер слудующего вопроса
+         * проверяет не закончились ли вопросы
+         * вызвает вывод вопроса или конец игры
          */
-        askPlayer: function () {
-            let currentQuestion = this.questions[this.questionsCount];
-            let strForPrompt = `Вопрос № ${this.questionsCount + 1}:<br><br>`;
-            strForPrompt += `${currentQuestion.question}<br><br>`;
-            document.getElementById('question').innerHTML = strForPrompt;
-
-            let j = 0;
-            for (const answerKey in currentQuestion.answers) {
-                j++;
-                //strForPrompt += `${answerKey}. ${currentQuestion.answers[answerKey]}<br>`;
-                let textAnswer = `${answerKey}. ${currentQuestion.answers[answerKey]}`;
-                document.getElementById('answer' + j).innerHTML = textAnswer;
+        getQuestion() {
+            if (++this.questionsCount === this.questions.length) {
+                this.endGame();
+            } else {
+                this.showQuestion();
             }
         },
 
-        getAndCheckAnswer(currentQuestion, strForPrompt) {
-            let playerAnswer = prompt(strForPrompt);
+        /**
+         * Возвращает текущий вопрос
+         * @returns {object} текущий вопрос
+         */
+        currentQuestion() {
+            return this.questions[this.questionsCount];
+        },
 
-            if (playerAnswer === currentQuestion.indexRightAnswer) {
+        /**
+         * возвращает строку с вопросом
+         * @returns {string} - строка с вопросом
+         */
+        getQuestionString(){
+            let strForPrompt = `Вопрос № ${this.questionsCount + 1}:<br><br>`;
+            strForPrompt += `${this.currentQuestion().question.toUpperCase()}`;
+            return strForPrompt;
+        },
+
+        /**
+         * Показывает вопрос и варианты ответов игроку
+         */
+        showQuestion() {
+            this.showInElement('question', this.getQuestionString());
+
+            let i = 1;
+            for (const answerKey in this.currentQuestion().answers) {
+                this.showInElement('answer' + (i++), this.currentQuestion().answers[answerKey]);
+            }
+        },
+
+        /**
+         * Выводит данные в элемент по id
+         * @param {string} idElement - id элемента
+         * @param {string} str - строка для вывода
+         */
+        showInElement(idElement, str) {
+            document.getElementById(idElement).innerHTML = str;
+        },
+
+        /**
+         * Проверяет ответ игрока на правильность и сообщает верный ответ или нет
+         * @param {string} playerAnswer - индекс ответа игрока
+         */
+        checkAnswer(playerAnswer) {
+            if (playerAnswer === this.currentQuestion().indexRightAnswer) {
                 alert('Правильно');
                 this.countRightAnswers++;
             } else {
                 alert('Не верно');
             }
+            this.getQuestion();
+        },
+
+        /**
+         * Заканчивает игру и выводит количество правильных ответов
+         */
+        endGame() {
+            document.getElementById('info-game').classList.remove('visible');
+            document.getElementById('begin').classList.remove('hidden');
+            document.getElementById('begin').innerText = 'начать заново';
+            const wordByNumber = getWordByNumber(this.countRightAnswers, 'вопрос', 'вопроса', 'вопросов');
+            this.showInElement('heading', `Вы ответили правильно на ${this.countRightAnswers} ${wordByNumber}`);
         }
     };
 
-    game.run();
-
+    /**
+     * Начинает игру при нажатии на кнопку начала
+     * @param {object} elem- элемент кнопки, вывзвавшей функцию
+     */
     function beginGame(elem) {
         elem.classList.add('hidden');
         document.getElementById('info-game').classList.add('visible');
+        game.run();
     }
 
 </script>

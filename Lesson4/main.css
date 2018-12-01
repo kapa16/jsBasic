@@ -11,24 +11,28 @@
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
-
 }
 
 .heading {
 }
 
 .btn {
-    margin: 0 10px;
+    margin: 20px 10px 0;
     padding: 10px 20px;
     color: black;
     border: 1px solid darkgray;
     border-radius: 5px;
+    text-transform: uppercase;
 }
 
 .btn:hover {
     cursor: pointer;
     color: white;
     background: darkgray;
+}
+
+.single {
+    margin: 0 auto;
 }
 
 #info-game {

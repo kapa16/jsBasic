@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="main.css">
     <title>Бродилка</title>
 </head>
 <body>
+<section class="container">
+    <h1 id="heading" class="heading">Добро пожаловать в игру &laquo;Бродилка&raquo;</h1>
+    <p>Откройте консоль</p>
+    <div id="begin" class="btn single" onclick="game.run()">Начать</div>
+</section>
 <script>
     "use strict";
 
@@ -193,8 +199,6 @@
         },
     };
 
-    // Запускаем игру.
-    game.run();
 </script>
 </body>
 </html>
