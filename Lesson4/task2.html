@@ -95,18 +95,9 @@
                     break;
             }
             return nextPoint;
-        },
-
-        /**
-         * Проверяет на возможность осуществления хода внутри игрового поля
-         * @param {object} nextPoint - координаты точки следующего хода
-         * @param {int} rowsCount - максимальное количество строк в поле
-         * @param {int} colsCount - максимальное количество колонок в поле
-         * @returns {boolean} - можно или нельзя пойти в следующую точку
-         */
-        canPlayerMakeStep(nextPoint, rowsCount, colsCount) {
-            return (nextPoint.x >= 0 && nextPoint.x < colsCount && nextPoint.y >= 0 && nextPoint.y < rowsCount);
         }
+
+
     };
 
     /**
@@ -139,7 +130,7 @@
                 }
 
                 const nextPoint = this.player.getNextPosition(direction);
-                if (this.player.canPlayerMakeStep(nextPoint, this.settings.rowsCount, this.settings.colsCount)) {
+                if (this.canPlayerMakeStep(nextPoint)) {
                     // Двигаем игрока.
                     this.player.move(nextPoint);
                 }
@@ -197,6 +188,16 @@
                 return direction;
             }
         },
+
+        /**
+         * Проверяет на возможность осуществления хода внутри игрового поля
+         * @param {object} nextPoint - координаты точки следующего хода
+         * @returns {boolean} - можно или нельзя пойти в следующую точку
+         */
+        canPlayerMakeStep(nextPoint) {
+            return (nextPoint.x >= 0 && nextPoint.x < this.settings.colsCount &&
+                nextPoint.y >= 0 && nextPoint.y < this.settings.rowsCount);
+        }
     };
 
 </script>

@@ -2,9 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
 </head>
 <body>
-$END$
+
+<script>
+    function Article() {
+        this.created = new Date();
+        Article.count++;
+        Article.last = this.created;
+    }
+    Article.count = 0;
+
+    Article.showStats = function () {
+        console.log('Всего: ' + this.count + ', Последняя: ' + this.last);
+    };
+
+    new Article();
+    new Article();
+
+    Article.showStats(); // Всего: 2, Последняя: (дата)
+
+    new Article();
+
+    Article.showStats(); // Всего: 3, Последняя: (дата)
+</script>
+
 </body>
 </html>

@@ -2,9 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
 </head>
 <body>
-$END$
+
+<script>
+    function User(fullName) {
+        this.fullName = fullName;
+
+        function getNames(obj, id) {
+            const arrFullName = obj.fullName.split(' ');
+            return arrFullName[id];
+        }
+
+        Object.defineProperties(this, {
+            firstName: {
+                get: function () {
+                    return getNames(this, 0);
+                },
+                set: function (firstName) {
+                    this.fullName = firstName + ' ' + this.lastName;
+                }
+            },
+            lastName: {
+                get: function () {
+                    return getNames(this, 1);
+                },
+                set: function (lastName) {
+                    this.fullName = this.firstName + ' ' + lastName;
+                }
+
+
+            }
+        });
+
+    }
+
+    const vasya = new User("Василий Попкин");
+
+    // чтение firstName/lastName
+    alert(vasya.firstName); // Василий
+    alert(vasya.lastName); // Попкин
+
+    // запись в lastName
+    vasya.lastName = 'Сидоров';
+
+    alert(vasya.fullName); // Василий Сидоров
+</script>
+
 </body>
 </html>
