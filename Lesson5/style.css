@@ -57,10 +57,22 @@ td{
 }
 
 button{
+    display: block;
     background: dodgerblue;
     border: blue;
     border-radius: 3px;
     color: aliceblue;
     padding: 10px 20px;
     font-size: 20px;
+    margin: 0 auto;
+}
+
+.error {
+    border: 1px solid darkred;
+    color: darkred;
+}
+
+.right {
+    border: 1px solid green;
+    color: green;
 }
