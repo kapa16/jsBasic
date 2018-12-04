@@ -17,33 +17,49 @@ function showErrorCorrect(elem, error) {
   }
 }
 
+const form = {
+  elem: {},
+
+  getElem (elemId) {
+    this.elem = document.getElementById(elemId);
+    return this.elem;
+  },
+
+  checkName() {
+    return this.elem.value.length <= 0 || this.elem.value.length > 50;
+  },
+
+  checkPhone() {
+    return this.elem.value.length !== 11 || this.elem.value.replace(/\d/g, '').length !== 0;
+  },
+
+  checkPass() {
+    return this.elem.value.length < 5 || this.elem.value.length > 50;
+  },
+
+  checkConfirm(pass) {
+    return this.elem.value !== document.getElementById(pass).value;
+  },
+
+  checkElement(elemId, pass) {
+    const elem = form.getElem(elemId.toLowerCase());
+    const result = form['check' + elemId](pass);
+    showErrorCorrect(elem, result);
+    return result;
+  }
+
+};
+
 function checkForm(event) {
 
-  let error = true;
+  let error = false;
 
-  const name = document.getElementById('name');
-  let result = name.value.length <= 0 || name.value.length > 50;
-  error = error || result;
-  showErrorCorrect(name, result);
+  error = form.checkElement('Name') || error;
+  error = form.checkElement('Phone') || error;
+  error = form.checkElement('Pass') || error;
+  error = form.checkElement('Confirm', 'pass') || error;
 
-  const phone = document.getElementById('phone');
-  const valuePhone = phone.value;
-  result = valuePhone.length !== 11 || valuePhone.replace(/\d/g, '').length !== 0;
-  error = error || result;
-  showErrorCorrect(phone, result);
-
-  const pass = document.getElementById('pass');
-  result = pass.value.length < 5 || pass.value.length > 50;
-  error = error || result;
-  showErrorCorrect(pass, result);
-
-  const confirmPass = document.getElementById('confirm-pass');
-  result = confirmPass.value !== pass.value;
-  error = error || result;
-  showErrorCorrect(confirmPass, result);
-//todo исправить error
   if (error) {
     event.preventDefault();
   }
-
 }
