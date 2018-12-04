@@ -2,9 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
 </head>
 <body>
-$END$
+<script>
+    "use strict";
+
+
+    function printNumbersInterval() {
+        let count = 0;
+
+        setTimeout(function run() {
+            count++;
+            if (count <= 20) {
+                console.log(count);
+                setTimeout(run, 100);
+            }
+        }, 100)
+
+    }
+
+    printNumbersInterval();
+</script>
 </body>
 </html>
