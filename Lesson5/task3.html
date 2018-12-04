@@ -8,25 +8,30 @@
 <body>
 
 <form action="#" class="form">
-    <div class="form__field">
-        <label class="form__block form__label" for="name">Имя пользователя</label>
-        <input class="form__block form__input" type="text" id="name">
+    <div class="flex-row">
+        <div class="form__field">
+            <label class="form__block form__label" for="name">Имя пользователя</label>
+            <input class="form__block form__input" type="text" id="name">
+        </div>
+
+        <div class="form__field">
+            <label class="form__block form__label" for="phone">Телефон</label>
+            <input class="form__block form__input" type="text" id="phone">
+        </div>
     </div>
 
-    <div class="form__field">
-        <label class="form__block form__label" for="phone">Телефон</label>
-        <input class="form__block form__input" type="text" id="phone">
+    <div class="flex-row">
+        <div class="form__field">
+            <label class="form__block form__label" for="pass">Пароль</label>
+            <input class="form__block form__input" type="password" id="pass">
+        </div>
+
+        <div class="form__field">
+            <label class="form__block form__label" for="confirm-pass">Повтор пароля</label>
+            <input class="form__block form__input" type="password" id="confirm-pass">
+        </div>
     </div>
 
-    <div class="form__field">
-        <label class="form__block form__label" for="pass">Пароль</label>
-        <input class="form__block form__input" type="password" id="pass">
-    </div>
-
-    <div class="form__field">
-        <label class="form__block form__label" for="confirm-pass">Повтор пароля</label>
-        <input class="form__block form__input" type="password" id="confirm-pass">
-    </div>
     <button type="submit">Принять</button>
 </form>
 
