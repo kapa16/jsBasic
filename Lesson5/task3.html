@@ -7,32 +7,32 @@
 </head>
 <body>
 
-<form action="#" class="form">
+<form action="#" class="form" name="form">
     <div class="flex-row">
         <div class="form__field">
-            <label class="form__block form__label" for="name">Имя пользователя</label>
-            <input class="form__block form__input" type="text" id="name">
+            <input class="form__input" type="text" id="name" placeholder="Имя">
+            <label class="form__label" for="name">* Имя должно содержать от 1 до 50 символов</label>
         </div>
 
         <div class="form__field">
-            <label class="form__block form__label" for="phone">Телефон</label>
-            <input class="form__block form__input" type="text" id="phone">
+            <input class="form__input" type="text" id="phone" placeholder="Телефон">
+            <label class="form__label" for="phone">* Телефон должен содержать ровно 11 цифр</label>
         </div>
     </div>
 
     <div class="flex-row">
         <div class="form__field">
-            <label class="form__block form__label" for="pass">Пароль</label>
-            <input class="form__block form__input" type="password" id="pass">
+            <input class="form__input" type="password" id="pass" placeholder="Пароль">
+            <label class="form__label" for="pass">* Пароль минимум 5 символов, максимум 50</label>
         </div>
 
         <div class="form__field">
-            <label class="form__block form__label" for="confirm-pass">Повтор пароля</label>
-            <input class="form__block form__input" type="password" id="confirm-pass">
+            <input class="form__input" type="password" id="confirm-pass" placeholder="Повтор пароля">
+            <label class="form__label" for="confirm-pass">* Значение должно совпадать с полем пароль</label>
         </div>
     </div>
 
-    <button type="submit">Принять</button>
+    <button type="submit">Отправить</button>
 </form>
 
 <script src="task3.js"></script>

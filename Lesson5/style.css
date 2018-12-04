@@ -10,14 +10,14 @@ table {
     font-size: 24px;
 }
 
-td{
+td {
     width: 40px;
     height: 40px;
     background-color: aliceblue;
     border: 1px solid gray;
 }
 
-.black{
+.black {
     background-color: darkgrey;
 }
 
@@ -42,12 +42,16 @@ td{
     flex: 1 1 0;
 }
 
-.form__field:not(:last-child){
+.form__field:not(:last-child) {
     margin-right: 30px;
 }
 
 .form__label {
-    margin-bottom: 5px;
+    display: none;
+    margin-top: 5px;
+    font-size: 12px;
+    color: red;
+
 }
 
 .form__input {
@@ -56,7 +60,13 @@ td{
     border: 1px solid dodgerblue;
 }
 
-button{
+
+.form__input:focus {
+    outline: 1px solid dodgerblue;
+    background: lightgoldenrodyellow;
+}
+
+button {
     display: block;
     background: dodgerblue;
     border: blue;
@@ -64,15 +74,25 @@ button{
     color: aliceblue;
     padding: 10px 20px;
     font-size: 20px;
+    text-transform: uppercase;
     margin: 0 auto;
 }
 
 .error {
-    border: 1px solid darkred;
-    color: darkred;
+    border: 1px solid red;
+    color: red;
+}
+.error:focus {
+    outline: 1px solid red;
 }
 
 .right {
     border: 1px solid green;
     color: green;
+}
+.right:focus {
+    outline: 1px solid green;
+}
+.display_block {
+    display: block;
 }
