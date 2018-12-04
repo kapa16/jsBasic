@@ -1,0 +1,38 @@
+table {
+    border-collapse: collapse;
+    margin: 100px auto;
+    outline: 2px solid black;
+    text-align: center;
+    font-size: 24px;
+}
+
+td{
+    width: 40px;
+    height: 40px;
+    background-color: aliceblue;
+    border: 1px solid gray;
+}
+
+.black{
+    background-color: darkgrey;
+}
+
+.main-field {
+    font-size: 30px;
+}
+
+.form {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.form__field {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__input {
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid dodgerblue;
+}
