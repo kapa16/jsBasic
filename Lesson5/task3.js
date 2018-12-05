@@ -72,13 +72,13 @@ const form = {
 
   /**
    * Проверка элемента и вызов функции показывающей / убирающей ошибку
-   * @param {string} elemId - id HTML элемента для проверки с большой буквы
+   * @param {string} elemId - id HTML элемента для проверки
    * @param {string} pass - id HTML пароля для сравнения с подтверждением
    * @returns {boolean} - результат проверки, если ошибка, то true
    */
-  checkElement(elemId, pass) {
+  checkElement(elemId, pass = '') {
     this.elem = form.getElem(elemId.toLowerCase());
-    const result = form['check' + elemId](pass);
+    const result = form['check' + elemId[0].toUpperCase() + elemId.slice(1)](pass);
     showErrorCorrect(this.elem, result);
     return result;
   }
@@ -92,10 +92,10 @@ function checkForm(event) {
 
   let error = false;
 
-  error = form.checkElement('Name', '') || error;
-  error = form.checkElement('Phone', '') || error;
-  error = form.checkElement('Pass', '') || error;
-  error = form.checkElement('Confirm', 'pass') || error;
+  error = form.checkElement('name') || error;
+  error = form.checkElement('phone') || error;
+  error = form.checkElement('pass') || error;
+  error = form.checkElement('confirm', 'pass') || error;
 
   if (error) {
     event.preventDefault();
