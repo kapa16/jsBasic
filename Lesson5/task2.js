@@ -2,16 +2,32 @@
 "use strict";
 
 /**
- * Объект фигуры
- * @param {int} symbolCode - код символя для отображения на доске
+ * Класс для создания фигур
  */
-const figure = {
-  symbolCode: 0,
+class Figure {
+  /**
+   * Конструктор фигуры
+   * @param {int} symbolCode - код сивола для отображения фигуры
+   * @param {string} position - позиция фигуры на доске
+   * @param {string} color - цвет фигуры / на будущее
+   * @param {string} type - тип фигуры / на будущее
+   */
+  constructor(symbolCode, position, color, type) {
+    this.symbolCode = symbolCode;
+    this.position = position;
+    this.color = color;
+    this.type = type;
+  }
 
+  /**
+   * Выводит фигуру в элемент HTML
+   * @param {object} elem - элемент HTML
+   */
   show(elem) {
+    console.log(this);
     elem.textContent = String.fromCharCode(this.symbolCode);
   }
-};
+}
 
 /**
  * Класс управления игрой
@@ -20,10 +36,10 @@ class Game {
 
   /**
    * Конструктор класса игры
+   * @param {array} figures - массив с фигурами
    */
   constructor() {
-    this.figuresPositions = [];
-    this.figure = figure;
+    this.figures = [];
   }
 
   /**
@@ -31,28 +47,33 @@ class Game {
    */
   init() {
     for (let row = 0; row < 8; row++) {
-      let arrCol = [];
-      for (let col = 0; col < 8; col++) {
-        arrCol.push(32);
+      if (row === 3) {
+        row = 5;
+        continue;
       }
-      this.figuresPositions[row] = arrCol;
 
       let diffCode = 0;
-      if (row === 7 || row === 6) {
+      let color = 'black';
+      if (row === 0 || row === 1) {
         diffCode = 6;
+        color = 'white';
       }
 
       if (row === 0 || row === 7) {
-        this.figuresPositions[row][0] = this.figuresPositions[row][7] = 9820 - diffCode;
-        this.figuresPositions[row][1] = this.figuresPositions[row][6] = 9822 - diffCode;
-        this.figuresPositions[row][2] = this.figuresPositions[row][5] = 9821 - diffCode;
-        this.figuresPositions[row][3] = 9819 - diffCode;
-        this.figuresPositions[row][4] = 9818 - diffCode;
+        this.figures.push(new Figure(9820 - diffCode, `a${row + 1}`, color, 'rook'));
+        this.figures.push(new Figure(9820 - diffCode, `h${row + 1}`, color, 'rook'));
+        this.figures.push(new Figure(9822 - diffCode, `b${row + 1}`, color, 'knight'));
+        this.figures.push(new Figure(9822 - diffCode, `g${row + 1}`, color, 'knight'));
+        this.figures.push(new Figure(9821 - diffCode, `c${row + 1}`, color, 'bishop'));
+        this.figures.push(new Figure(9821 - diffCode, `f${row + 1}`, color, 'bishop'));
+        this.figures.push(new Figure(9819 - diffCode, `d${row + 1}`, color, 'queen'));
+        this.figures.push(new Figure(9818 - diffCode, `e${row + 1}`, color, 'king'));
       }
 
       if (row === 1 || row === 6) {
         for (let col = 0; col < 8; col++) {
-          this.figuresPositions[row][col] = 9823 - diffCode;
+          const letter = String.fromCharCode(97 + col);
+          this.figures.push(new Figure(9823 - diffCode, `${letter}${row + 1}`, color, 'pawn'));
         }
       }
     }
@@ -60,19 +81,17 @@ class Game {
 
   /**
    * Вывод фигур на доску
-   * @param {Array} playingField - игровое поле доски
    */
-  showFigures(playingField) {
-    for (let row = 0; row < playingField.length; row++) {
-      for (let col = 0; col < playingField[row].length; col++) {
-        this.figure.symbolCode = this.figuresPositions[row][col];
-        this.figure.show(playingField[row][col]);
-      }
-
+  showFigures() {
+    const figures = this.figures;
+    for (let i = 0; i < figures.length; i++) {
+      const elem = document.getElementById(figures[i].position);
+      figures[i].show(elem);
     }
   }
+
 }
 
 const newGame = new Game();
 newGame.init();
-newGame.showFigures(chessBoard.playingField);
+newGame.showFigures();

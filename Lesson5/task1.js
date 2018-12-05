@@ -47,6 +47,7 @@ class Board {
           continue;
         }
 
+        cell.setAttribute('id', `${String.fromCharCode(96 + col)}${sizeX - row + 1}`);
         arrCells.push(cell);
 
         cell.classList.add('main-field');
