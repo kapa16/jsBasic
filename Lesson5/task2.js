@@ -1,21 +1,34 @@
 /*jslint node: true */
 "use strict";
 
+/**
+ * Объект фигуры
+ * @param {int} symbolCode - код символя для отображения на доске
+ */
 const figure = {
-    symbolCode: 0,
+  symbolCode: 0,
 
   show(elem) {
     elem.textContent = String.fromCharCode(this.symbolCode);
   }
 };
 
+/**
+ * Класс управления игрой
+ */
 class Game {
 
+  /**
+   * Конструктор класса игры
+   */
   constructor() {
     this.figuresPositions = [];
     this.figure = figure;
   }
 
+  /**
+   * Инициализация игры: распределение позиций фигур для начала
+   */
   init() {
     for (let row = 0; row < 8; row++) {
       let arrCol = [];
@@ -45,7 +58,11 @@ class Game {
     }
   }
 
-  showFigures (playingField) {
+  /**
+   * Вывод фигур на доску
+   * @param {Array} playingField - игровое поле доски
+   */
+  showFigures(playingField) {
     for (let row = 0; row < playingField.length; row++) {
       for (let col = 0; col < playingField[row].length; col++) {
         this.figure.symbolCode = this.figuresPositions[row][col];
@@ -54,7 +71,6 @@ class Game {
 
     }
   }
-
 }
 
 const newGame = new Game();
