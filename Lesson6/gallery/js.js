@@ -8,6 +8,10 @@
  * @property {string} settings.openedImageScreenClass Класс для ширмы открытой картинки.
  * @property {string} settings.openedImageCloseBtnClass Класс для картинки кнопки закрыть.
  * @property {string} settings.openedImageCloseBtnSrc Путь до картинки кнопки открыть.
+ * @property {string} settings.errorOpenedImageBtnSrc Путь до картинки ошибки загрузки открытой картинки.
+ * @property {string} settings.openedImageArrowsClass Класс кнопок пролистывания картинок
+ * @property {string} settings.openedImageArrowPrevClass Класс кнопки предыдущей картинки
+ * @property {string} settings.openedImageArrowNextClass Класс кнопки следующей картинки
  */
 const gallery = {
   settings: {
@@ -18,7 +22,14 @@ const gallery = {
     openedImageCloseBtnClass: 'galleryWrapper__close',
     openedImageCloseBtnSrc: 'images/gallery/close.png',
     errorOpenedImageBtnSrc: 'images/gallery/noImage.jpg',
+    openedImageArrowsClass: 'galleryWrapper__arrow',
+    openedImageArrowPrevClass: 'galleryWrapper__arrow_prev',
+    openedImageArrowNextClass: 'galleryWrapper__arrow_next',
+
   },
+  directionPrev: 'previous',
+  directionNext: 'next',
+  currentFullImageUrl: '',
 
   /**
    * Инициализирует галерею, ставит обработчик события.
@@ -50,6 +61,7 @@ const gallery = {
     this.openImage(event.target.dataset.full_image_url);
   },
 
+
   /**
    * Открывает картинку.
    * @param {string} src Ссылка на картинку, которую надо открыть.
@@ -58,7 +70,12 @@ const gallery = {
     // Получаем контейнер для открытой картинки, в нем находим тег img и ставим ему нужный src.
     const imageElement = this.getScreenContainer().querySelector(`.${this.settings.openedImageClass}`);
     imageElement.src = src;
+    this.changeCurrentUrl(src);
     this.errorLoadImageHandler(imageElement);
+  },
+
+  changeCurrentUrl(currentUrl) {
+    this.currentFullImageUrl = currentUrl;
   },
 
   /**
@@ -66,7 +83,7 @@ const gallery = {
    * @param {HTMLImageElement} imageElement - элемент картинки
    */
   errorLoadImageHandler(imageElement){
-    imageElement.onerror = imageElement.src = this.settings.errorOpenedImageBtnSrc;
+    imageElement.onerror = () => imageElement.src = this.settings.errorOpenedImageBtnSrc;
   },
 
   /**
@@ -111,11 +128,58 @@ const gallery = {
     image.classList.add(this.settings.openedImageClass);
     galleryWrapperElement.appendChild(image);
 
+    const arrowPrev = document.createElement('div');
+    arrowPrev.classList.add(this.settings.openedImageArrowsClass, this.settings.openedImageArrowPrevClass);
+    arrowPrev.textContent = '<';
+    arrowPrev.addEventListener('click', event => this.arrowsClickHandler(event));
+    galleryWrapperElement.appendChild(arrowPrev);
+
+    const arrowNext = document.createElement('div');
+    arrowNext.classList.add(this.settings.openedImageArrowsClass, this.settings.openedImageArrowNextClass);
+    arrowNext.textContent = '>';
+    arrowNext.addEventListener('click', event => this.arrowsClickHandler(event));
+    galleryWrapperElement.appendChild(arrowNext);
+
     // Добавляем контейнер-обертку в тег body.
     document.body.appendChild(galleryWrapperElement);
 
     // Возвращаем добавленный в body элемент, наш контейнер-обертку.
     return galleryWrapperElement;
+  },
+
+
+  arrowsClickHandler(event) {
+
+    const direction = this.determineDirection(event);
+    const src = this.getReplacementImageSrc(direction);
+
+    this.openImage(src);
+  },
+
+  /**
+   * Определяет направление пролистывания изображений
+   * @param {Event} event - событие по кнопке смены изображения
+   * @returns {string} - направление смены изображений
+   */
+  determineDirection(event) {
+    return (event.target.classList.contains(this.settings.openedImageArrowPrevClass)) ?
+      this.directionPrev : this.directionNext;
+
+  },
+
+  getReplacementImageSrc(direction) {
+    const galleryContainer = document.querySelector(this.settings.previewSelector);
+    const imagePreviewElement = galleryContainer.
+      querySelector(`[data-full_image_url="${this.currentFullImageUrl}"]`);
+    const nextImagePreviewElement = imagePreviewElement[`${direction}ElementSibling`];
+    if (nextImagePreviewElement) {
+      return nextImagePreviewElement.dataset.full_image_url;
+    }
+    if (direction === 'next') {
+      return galleryContainer.firstElementChild.dataset.full_image_url;
+    } else {
+      return galleryContainer.lastElementChild.dataset.full_image_url;
+    }
   },
 
   /**
