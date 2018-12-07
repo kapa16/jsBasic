@@ -74,6 +74,10 @@ const gallery = {
     this.errorLoadImageHandler(imageElement);
   },
 
+  /**
+   * Сохраняет текущий адрес изображения
+   * @param {string} currentUrl - адрес изображения
+   */
   changeCurrentUrl(currentUrl) {
     this.currentFullImageUrl = currentUrl;
   },
@@ -147,7 +151,10 @@ const gallery = {
     return galleryWrapperElement;
   },
 
-
+  /**
+   * Обработчик события нажатий на стрелки смены изображений
+   * @param {Event} event - событие нажатия на стрелки
+   */
   arrowsClickHandler(event) {
 
     const direction = this.determineDirection(event);
@@ -167,6 +174,11 @@ const gallery = {
 
   },
 
+  /**
+   * получает путь к следующему изображению
+   * @param {string} direction - направление прокрутки изображений
+   * @returns {string} путь к картинке
+   */
   getReplacementImageSrc(direction) {
     const galleryContainer = document.querySelector(this.settings.previewSelector);
     const imagePreviewElement = galleryContainer.
