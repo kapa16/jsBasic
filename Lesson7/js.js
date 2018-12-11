@@ -179,6 +179,7 @@ const snake = {
   body: null,
   direction: null,
   lastStepDirection: null,
+  nextStepHeadPoint: {},
 
   /**
    * Инициализирует змейку, откуда она будет начинать и ее направление.
@@ -223,7 +224,7 @@ const snake = {
     // Записываем направление движения, которое сейчас произойдет как направление прошлого шага.
     this.lastStepDirection = this.direction;
     // Вставляем следующую точку в начало массива.
-    this.body.unshift(this.getNextStepHeadPoint());
+    this.body.unshift(Object.assign({}, this.nextStepHeadPoint));
     // Удаляем последний лишний элемент.
     this.body.pop();
   },
@@ -246,7 +247,7 @@ const snake = {
    * Отдает точку, где будет голова змейки если она сделает шаг.
    * @returns {{x: int, y: int}} Следующая точка куда придет змейка сделав шаг.
    */
-  getNextStepHeadPoint() {
+  getNextStepHeadPointCoordinates() {
     // Получаем в отдельную переменную голову змейки.
     const firstPoint = this.body[0];
     // Возвращаем точку, где окажется голова змейки в зависимости от направления.
@@ -260,6 +261,10 @@ const snake = {
       case 'left':
         return {x: firstPoint.x - 1, y: firstPoint.y};
     }
+  },
+
+  setNextStepHeadPoint(nextPoint) {
+    Object.assign(this.nextStepHeadPoint, nextPoint);
   },
 
   /**
@@ -451,12 +456,23 @@ const game = {
    * Обработчик события тика игры, когда змейка должна перемещаться.
    */
   tickHandler() {
+    const nextHeadPoint = this.snake.getNextStepHeadPointCoordinates();
     // Если следующий шаг невозможен, то ставим игру в статус завершенный.
-    if (!this.canMakeStep()) {
+    if (!this.canMakeStep(nextHeadPoint)) {
       return this.finish();
     }
+    if (nextHeadPoint.x >= this.config.getColsCount()) {
+      nextHeadPoint.x = 0;
+    } else if (nextHeadPoint.y >= this.config.getRowsCount()) {
+      nextHeadPoint.y = 0;
+    } else if (nextHeadPoint.x < 0) {
+      nextHeadPoint.x = this.config.getColsCount() - 1;
+    } else if (nextHeadPoint.y < 0) {
+      nextHeadPoint.y = this.config.getRowsCount() - 1;
+    }
+    this.snake.setNextStepHeadPoint(nextHeadPoint);
     // Если следующий шаг будет на еду, то заходим в if.
-    if (this.food.isOnPoint(this.snake.getNextStepHeadPoint())) {
+    if (this.food.isOnPoint(nextHeadPoint)) {
       this.score++; //task2
       // Прибавляем к змейке ячейку.
       this.snake.growUp();
@@ -628,15 +644,10 @@ const game = {
    * Проверяет возможен ли следующий шаг.
    * @returns {boolean} true если следующий шаг змейки возможен, false если шаг не может быть совершен.
    */
-  canMakeStep() {
-    // Получаем следующую точку головы змейки в соответствии с текущим направлением.
-    const nextHeadPoint = this.snake.getNextStepHeadPoint();
+  canMakeStep(nextHeadPoint) {
     // Змейка может сделать шаг если следующая точка не на теле змейки и точка внутри игрового поля.
-    return !this.snake.isOnPoint(nextHeadPoint) &&
-      nextHeadPoint.x < this.config.getColsCount() &&
-      nextHeadPoint.y < this.config.getRowsCount() &&
-      nextHeadPoint.x >= 0 &&
-      nextHeadPoint.y >= 0;
+    return !this.snake.isOnPoint(nextHeadPoint);
+
   },
 };
 
