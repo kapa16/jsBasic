@@ -165,7 +165,7 @@ const map = {
     // Отображаем еду.
     foodCell.classList.add('food');
     // Добавляем элемент ячейки еды в массив занятых точек на карте.
-    this.usedCells.push(foodCell);
+    this.usedCells.push(foodCell); //task1
   },
 };
 
@@ -371,6 +371,7 @@ const game = {
   food,
   status,
   tickInterval: null,
+  score: 0,     //task2
 
   /**
    * Инициализация игры.
@@ -456,6 +457,7 @@ const game = {
     }
     // Если следующий шаг будет на еду, то заходим в if.
     if (this.food.isOnPoint(this.snake.getNextStepHeadPoint())) {
+      this.score++; //task2
       // Прибавляем к змейке ячейку.
       this.snake.growUp();
       // Ставим еду в свободную ячейку.
@@ -512,6 +514,8 @@ const game = {
    * Отображает все для игры, карту, еду и змейку.
    */
   render() {
+    const scoreElement = document.getElementById('score'); //task2
+    scoreElement.textContent = this.score;                           //task2
     this.map.render(this.snake.getBody(), this.food.getCoordinates());
   },
 
