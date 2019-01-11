@@ -17,7 +17,7 @@
 }
 #game{
     border-collapse: collapse;
-    margin: 2% auto 0;
+    margin: 10px auto 0;
 }
 #menu{
     display: flex;
@@ -43,4 +43,11 @@ td.cell{
 }
 .disabled:hover{
     background: #7c7c7c;
+}
+
+.game-score{
+    color: white;
+    text-align: center;
+    margin-top: 2%;
+    font-size: 24px;
 }
